@@ -34,7 +34,7 @@ struct HeapType{
 };
 
 struct StationType{
-    xStationType Station;
+    //xStationType Station;
     int Net; /* total income of station */
     int NetElectric;
     int NetLady;
@@ -49,7 +49,7 @@ struct StationType{
     HeapType HLady;
     HeapType HRoad;
     HeapType HHybrid;
-};
+}Station[12];
 
 struct HNodeType {
     LicenseType License ;
@@ -72,20 +72,48 @@ void NewBike(ClassType Class, string License, int Mile, xStationType StationName
         newnode->License[i]=License[i];
     }
     
+    for(i=0; i<5; i++){
+        cout<<License[i];
+    }
+    cout<<endl;
     
-    int LicenseTag=License[0];
+    int LicenseTag=(int)License[0]-48;
+    //cout<<LicenseTag<<endl;
+    
     i=1;
     while(i<5){
         if(isdigit(License[i]))
-            LicenseTag=LicenseTag*31+((int)License[i]-48);
+            LicenseTag=LicenseTag*31+(License[i]-48);
         else
-            LicenseTag=LicenseTag*31+((int)License[i]-55);
+            LicenseTag=LicenseTag*31+(License[i]-55);
         i++;
     }
-    cout<<endl;
+    LicenseTag>>=10;
+    char temp = (char) LicenseTag;
+    LicenseTag = temp;
+    
+    cout<<LicenseTag<<endl;
+    
     newnode->Mileage=Mile;
     newnode->Station=StationName;
     newnode->Status=Free;
+    
+    //Station[StationName];
+    if(Class==0){
+        Station[StationName].NumElectric++;
+    }
+    else if(Class==1){
+        Station[StationName].NumLady++;
+    }
+    else if(Class==2){
+        Station[StationName].NumRoad++;
+    }
+    else if(Class==3){
+        Station[StationName].NumHybrid++;
+    }
+    //Station[StationName].Net++;
+    
+    
 }
 
 void Inquire(string License){
