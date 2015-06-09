@@ -2,7 +2,6 @@
 #include<string>
 #include<iomanip> //using setw()
 #include<sstream>
-#include <vector>
 #include "HeapType.cpp"
 
 // "Git tutorial", Howver I am still not completely sure ~~
