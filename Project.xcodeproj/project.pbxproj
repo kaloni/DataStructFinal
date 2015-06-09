@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C331B9941B25B49700C03DB6 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C331B9931B25B49700C03DB6 /* main.cpp */; };
+		C331B9AF1B26B37300C03DB6 /* HeapType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C331B9AD1B26B37300C03DB6 /* HeapType.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +26,8 @@
 /* Begin PBXFileReference section */
 		C331B9901B25B49700C03DB6 /* Project */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Project; sourceTree = BUILT_PRODUCTS_DIR; };
 		C331B9931B25B49700C03DB6 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		C331B9AD1B26B37300C03DB6 /* HeapType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HeapType.cpp; sourceTree = "<group>"; };
+		C331B9AE1B26B37300C03DB6 /* HeapType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeapType.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +61,8 @@
 			isa = PBXGroup;
 			children = (
 				C331B9931B25B49700C03DB6 /* main.cpp */,
+				C331B9AD1B26B37300C03DB6 /* HeapType.cpp */,
+				C331B9AE1B26B37300C03DB6 /* HeapType.h */,
 			);
 			path = Project;
 			sourceTree = "<group>";
@@ -119,6 +124,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C331B9941B25B49700C03DB6 /* main.cpp in Sources */,
+				C331B9AF1B26B37300C03DB6 /* HeapType.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,6 +238,7 @@
 				C331B9991B25B49700C03DB6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
