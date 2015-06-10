@@ -3,30 +3,7 @@
 #include<iomanip> //using setw()
 #include<sstream>
 #include "HeapType.cpp"
-
-// "Git tutorial", Howver I am still not completely sure ~~
-/*
- 0) Create a folder, name is something like "DataStruct..."
-    In the folder (in command/terminal "black box"), type
-    - git init
-    (I think you have to atleast)
- 
- 1) Get project
-    - git clone <url_name>
- 
- 2) Set remote
-    - git add remote origin <url_name>
- 
- 3) Do some thing. Then upload
-    - git add .
-    - git commit -m "message"
-    - git push origin master
- 
- 4) To get latest changes
-    - git fetch
-    - git merge origin/master
- 
- */
+#include "HashTable.cpp"
 
 using namespace std;
 
@@ -40,7 +17,28 @@ enum xStationType {
     Ximen, Liuzhangli, Muzha,
     Guting, Gongguan, Jingmei };
 
-typedef char LicenseType[5];
+//typedef char LicenseType[5];
+struct LicenseType {
+public:
+    LicenseType() {
+        for(int i = 0; i < 5; ++i) {
+            license[i] = '0';
+        }
+    }
+    char &operator[](int index) {
+        return license[index];
+    }
+    bool operator==(LicenseType& lt) {
+        for(int i = 0; i < 5; ++i) {
+            if( license[i] != lt[i] )
+                return false;
+        }
+        return true;
+    }
+    friend ostream& operator<<(ostream& os, LicenseType& lt);
+private:
+    char license[5];
+};
 
 struct BikeType{
     LicenseType License;
@@ -188,9 +186,27 @@ void JunkIt(string License){
     
 }
 
-void HashReport(){
+template<class K, class V>
+void printHashTable(HashTable<K, V>& ht) {
+    for(unsigned i = 0; i < ht.size(); ++i) {
+        if( ht[i].size() > 0 ) {
+            typename HashTable<K,V>::ListType::NodeType* node_ptr = ht[i].front;
+            while( node_ptr ) {
+                cout << node_ptr->key;
+                if( node_ptr->next ) {
+                    cout << "->";
+                }
+                node_ptr = node_ptr->next;
+            }
+            cout << endl;
+        }
+    }
+}
+void HashReport(HashTable<LicenseType, BikePtr>& ht){
+    printHashTable(ht);
 }
 
+// print a heap in console
 template<class T>
 void printHeap(HeapType<T>& heap) {
     for(int i = 0; i < heap.size(); i = 2*i + 1) {
@@ -203,9 +219,41 @@ void printHeap(HeapType<T>& heap) {
     }
 }
 
+ostream& operator<<(ostream& os, LicenseType& lt) {
+    for(int i = 0; i < 5; ++i)
+        os << lt[i];
+    return os;
+}
+
+// create bit mask for extracting bits (like bits 11-18 in hash function)
+unsigned createMask(unsigned start, unsigned end) {
+    unsigned mask = 0;
+    for(unsigned i = start; i < end; ++i) {
+        mask |= (1 << i);
+    }
+    return mask;
+}
+
+// The hashfunction used by our program
+int hashfunc(LicenseType key) {
+    unsigned hash = (unsigned)key[0]-48;
+    int i=1;
+    while(i<5){
+        if(isdigit(key[i]))
+            hash = hash*31+(key[i]-48);
+        else
+            hash = hash*31+(key[i]-55);
+        i++;
+    }
+    hash &= createMask(11,18);
+    hash >>= 10;
+    return hash;
+}
+
 int main(){
     
     // Example using the HeapType class
+    /*
     HeapType<BikeType> bikeHeap;
     for(int i = 0; i < 10; ++i) {
         BikeType b;
@@ -213,6 +261,46 @@ int main(){
         bikeHeap.insert(b);
     }
     printHeap(bikeHeap);
+     */
+    
+    // HashTable Example
+    typedef HashTable<LicenseType, BikePtr> BikeTable;
+    
+    BikeTable bikeTable(256, &hashfunc);
+    BikeType b1, b2, b3;
+    for(int i = 0; i < 5; i++) {
+        b1.License[i] = 'a';
+        b2.License[i] = 'a';
+        b3.License[i] = 'b';
+    }
+    bikeTable.insert(b1.License, &b1);
+    bikeTable.insert(b2.License, &b2);
+    bikeTable.insert(b3.License, &b3);
+    printHashTable(bikeTable);
+    /*
+    BikeTable::NodeType* x = bikeTable.get(b1.License);
+    if( x ) {
+        for(int i = 0; i < 5; i++) {
+            cout << x->key[i];
+            if( i < 4 ) cout << ", ";
+        }
+        cout << endl;
+    }
+    
+    int hash = hashfunc(b1.License);
+    BikeTable::ListType list = bikeTable[hash];
+    bool b = (it_1 != it_2);
+    for(BikeTable::ListType::iterator it = list.begin(); it.nonend(); ++it) {
+        for(int i = 0; i < 5; ++i) {
+            //cout << (*it).key[i] << ", ";
+            cout << it->key[i];
+            if( i < 4 ) cout << ", ";
+        }
+        cout << " :: ";
+    }
+    cout << endl;
+    */
+    
     
     string state;
     string move;
