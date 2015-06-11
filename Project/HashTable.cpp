@@ -48,12 +48,12 @@ void HTList<K,V>::erase(K key) {
     else while( cur_ptr ) {
         if( cur_ptr->next ) {
             if( cur_ptr->next->key == key ) {
-                
+
                 cur_ptr->next = (cur_ptr->next->next);
-                
+
                 if( back == cur_ptr->next )
                     back = cur_ptr;
-                
+
                 delete cur_ptr->next;
                 m_size--;
                 break;

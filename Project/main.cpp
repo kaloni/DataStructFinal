@@ -3,11 +3,13 @@
 #include<string>
 #include<iomanip> //using setw()
 #include<sstream>
+#include<stdlib.h>
 #include "HeapType.cpp"
 #include "HashTable.cpp"
 #include "Graph.h"
 
 using namespace std;
+
 
 enum StatusType {Free, Rented};
 
@@ -41,6 +43,8 @@ public:
 private:
     char license[5];
 };
+
+int hashfunc(LicenseType key);
 
 struct BikeType{
     BikeType() : Mileage(0) {}
@@ -112,15 +116,15 @@ void NewBike(ClassType Class, string License, int Mile, xStationType StationName
     for(i=0; i<5; i++){
         newnode->License[i]=License[i];
     }
-    
+
     for(i=0; i<5; i++){
         cout<<License[i];
     }
     cout<<endl;
-    
+
     int LicenseTag=(int)License[0]-48;
     //cout<<LicenseTag<<endl;
-    
+
     i=1;
     while(i<5){
         if(isdigit(License[i]))
@@ -132,16 +136,16 @@ void NewBike(ClassType Class, string License, int Mile, xStationType StationName
     LicenseTag>>=10;
     char temp = (char) LicenseTag;
     LicenseTag = temp;
-    
+
     cout<<LicenseTag<<endl;
-    
+
     newnode->Mileage=Mile;
     newnode->Station=StationName;
     newnode->Status=Free;
 
     // version 3
     Station[StationName].Num[Class]++;
-    
+
     // Station[StationName];
     // version 2
     /*
@@ -160,7 +164,7 @@ void NewBike(ClassType Class, string License, int Mile, xStationType StationName
             break;
     }
      */
-    
+
     // version 1
     /*
     if(Class==0){
@@ -177,16 +181,46 @@ void NewBike(ClassType Class, string License, int Mile, xStationType StationName
     }
     */
     //Station[StationName].Net++;
-    
-    
+
+
 }
 
+template<class K, class V>
 void Inquire(string License){
-    
+
+    cout << setw(15) << "License" << setw(15) << "Mileage"<<setw(15) << "Class" << setw(15) << "Station"<<endl;
+    cout<<"============================================================"<<endl;
+    int LicenseTag=(int)License[0]-48;
+    //cout<<LicenseTag<<endl;
+
+    int i=1;
+    while(i<5){
+        if(isdigit(License[i]))
+            LicenseTag=LicenseTag*31+(License[i]-48);
+        else
+            LicenseTag=LicenseTag*31+(License[i]-55);
+        i++;
+    }
+    LicenseTag>>=10;
+    char temp = (char) LicenseTag;
+    LicenseTag = temp;
+
+    HashTable<K,V>::NodeType* ptr;
+    while(ptr){
+        if(ptr->key==License)
+            cout << setw(15) << ptr->key<< setw(15) << ptr->mile<<setw(15) << ptr->class << setw(15) << ptr->station<<endl;
+        else
+            ptr=ptr->next;
+    }
+    if(ptr==NULL)
+        cout << "Bike "<<License<<" does not belong to our company."<<endl;
+
+    //int LicenseTag=hashfunc(License_Type);
+
 }
 
 void JunkIt(string License){
-    
+
 }
 
 template<class K, class V>
@@ -228,8 +262,8 @@ ostream& operator<<(ostream& os, LicenseType& lt) {
     return os;
 }
 
-// create bit mask for extracting bits (like bits 11-18 in hash function)
-unsigned createMask(unsigned start, unsigned end) {
+// create bit mask for extracting bits (like bitnullptr,0s 11-18 in hash function)
+unsigned createMask(unsigned start, unsigned end) {int hashfunc(LicenseType key)
     unsigned mask = 0;
     for(unsigned i = start; i < end; ++i) {
         mask |= (1 << i);
@@ -310,7 +344,7 @@ string stationTypeToString(int stationName) {
 }
 
 int main(int argc, char* argv[]){
-    
+
     ////////////////////////////////////////////////////////////////////////////////////////
     // Graph Test (station map)
     // open the station map file
@@ -318,7 +352,7 @@ int main(int argc, char* argv[]){
     in_stream.open("Testcases/TC1/testMap");
     streambuf *cinbuf = cin.rdbuf();
     cin.rdbuf( in_stream.rdbuf() );
-    
+
     // declase the station map as a graph
     Graph stationMap(12);
     // parse the station map file into graph
@@ -336,22 +370,22 @@ int main(int argc, char* argv[]){
             cerr << "Parse error : Could not parse distance between " << stationTypeToString(from) << " and " << stationTypeToString(to) << endl;
             exit(-1);
         }
-        if( from != NoStation && to != NoStation )
+        if( from != NoStation && to != NoStation ){}
             stationMap.insert(from, to, distance);
         else
             cerr << "Parse error : Could not parse station names : " << stationTypeToString(from) << " | " << stationTypeToString(to) << endl;
     }
-    
+
     // restore iostream, close filestream
     cin.rdbuf( cinbuf );
     in_stream.close();
-    
+
     // print the station map (printed as integers, because that's how it's stored)
     // 0 is Danshui, 1 is Hongshulin etc.
     cout << "   StationMap Graph    " << endl;
     cout << stationMap << endl;
-    
-    
+
+
     cout << "   Shortest paths from Danshui to all other stations   " << endl;
     // get the "previous station vector" from the dijkstra shortest path algorithm
     // this gives all shortests paths from, in this case, Danshui station
@@ -360,7 +394,7 @@ int main(int argc, char* argv[]){
     for(int i = 0; i < stationMap.size(); i++) {
         forward_list<int> shortest_path = stationMap.getPath(prev, i);
         if( ! shortest_path.empty() ) {
-            
+
             for(forward_list<int>::iterator it = shortest_path.begin();;) {
                 cout << stationTypeToString(*it);
                 if( ++it != shortest_path.end() )
@@ -370,10 +404,10 @@ int main(int argc, char* argv[]){
             cout << endl;
         }
     }
-    
+
     // End of Graph Test
     ////////////////////////////////////////////////////////////////////////////////////////
-    
+
     ////////////////////////////////////////////////////////////////////////////////////////
     // HeapType Test
     /*
@@ -382,7 +416,7 @@ int main(int argc, char* argv[]){
             return b1.Mileage < b2.Mileage;
         }
     };
-    
+
     HeapType<BikeType> bikeHeap;
     for(int i = 0; i < 10; ++i) {
         BikeType a;
@@ -391,11 +425,11 @@ int main(int argc, char* argv[]){
     }
     printHeap(bikeHeap);
      */
-    
+
     // End of HeapType Test
     ////////////////////////////////////////////////////////////////////////////////////////
-    
-    
+
+
     ////////////////////////////////////////////////////////////////////////////////////////
     // HashTable Test
     /*
@@ -411,11 +445,11 @@ int main(int argc, char* argv[]){
     bikeTable.insert(b2.License, &b2);
     bikeTable.insert(b3.License, &b3);
     printHashTable(bikeTable);
-     
+
     // End of HashTable Test
     ////////////////////////////////////////////////////////////////////////////////////////
     */
-    
+
     /*
     BikeTable::NodeType* x = bikeTable.get(b1.License);
     if( x ) {
@@ -425,7 +459,7 @@ int main(int argc, char* argv[]){
         }
         cout << endl;
     }
-    
+
     int hash = hashfunc(b1.License);
     BikeTable::ListType list = bikeTable[hash];
     bool b = (it_1 != it_2);
@@ -439,8 +473,8 @@ int main(int argc, char* argv[]){
     }
     cout << endl;
     */
-    
-    
+
+
     string state;
     string move;
     string Class,License,Station;
@@ -498,6 +532,6 @@ int main(int argc, char* argv[]){
             HashReport();
         }
     }
-    
+
     return 0;
 }
