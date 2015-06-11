@@ -10,6 +10,7 @@
 		C331B9941B25B49700C03DB6 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C331B9931B25B49700C03DB6 /* main.cpp */; };
 		C331B9AF1B26B37300C03DB6 /* HeapType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C331B9AD1B26B37300C03DB6 /* HeapType.cpp */; };
 		C331B9B21B27122D00C03DB6 /* HashTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C331B9B01B27122D00C03DB6 /* HashTable.cpp */; };
+		C331B9B61B28728800C03DB6 /* Graph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C331B9B41B28728800C03DB6 /* Graph.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +32,17 @@
 		C331B9AE1B26B37300C03DB6 /* HeapType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeapType.h; sourceTree = "<group>"; };
 		C331B9B01B27122D00C03DB6 /* HashTable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HashTable.cpp; sourceTree = "<group>"; };
 		C331B9B11B27122D00C03DB6 /* HashTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HashTable.h; sourceTree = "<group>"; };
+		C331B9B41B28728800C03DB6 /* Graph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Graph.cpp; sourceTree = "<group>"; };
+		C331B9B51B28728800C03DB6 /* Graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Graph.h; sourceTree = "<group>"; };
+		C3E686871B298E4100EEC3E6 /* output.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = output.txt; sourceTree = "<group>"; };
+		C3E686881B298E4100EEC3E6 /* testCase01 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testCase01; sourceTree = "<group>"; };
+		C3E686891B298E4100EEC3E6 /* testMap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testMap; sourceTree = "<group>"; };
+		C3E6868B1B298E4100EEC3E6 /* output.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = output.txt; sourceTree = "<group>"; };
+		C3E6868C1B298E4100EEC3E6 /* testCase02 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testCase02; sourceTree = "<group>"; };
+		C3E6868D1B298E4100EEC3E6 /* testMap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testMap; sourceTree = "<group>"; };
+		C3E6868F1B298E4100EEC3E6 /* output.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = output.txt; sourceTree = "<group>"; };
+		C3E686901B298E4100EEC3E6 /* testCase03 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testCase03; sourceTree = "<group>"; };
+		C3E686911B298E4100EEC3E6 /* testMap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testMap; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +59,7 @@
 		C331B9871B25B49700C03DB6 = {
 			isa = PBXGroup;
 			children = (
+				C3E686851B298E4100EEC3E6 /* Testcases */,
 				C331B9921B25B49700C03DB6 /* Project */,
 				C331B9911B25B49700C03DB6 /* Products */,
 			);
@@ -66,10 +79,53 @@
 				C331B9931B25B49700C03DB6 /* main.cpp */,
 				C331B9AD1B26B37300C03DB6 /* HeapType.cpp */,
 				C331B9AE1B26B37300C03DB6 /* HeapType.h */,
+				C331B9B41B28728800C03DB6 /* Graph.cpp */,
+				C331B9B51B28728800C03DB6 /* Graph.h */,
 				C331B9B01B27122D00C03DB6 /* HashTable.cpp */,
 				C331B9B11B27122D00C03DB6 /* HashTable.h */,
 			);
 			path = Project;
+			sourceTree = "<group>";
+		};
+		C3E686851B298E4100EEC3E6 /* Testcases */ = {
+			isa = PBXGroup;
+			children = (
+				C3E686861B298E4100EEC3E6 /* TC1 */,
+				C3E6868A1B298E4100EEC3E6 /* TC2 */,
+				C3E6868E1B298E4100EEC3E6 /* TC3_basic */,
+			);
+			name = Testcases;
+			path = Project/Testcases;
+			sourceTree = "<group>";
+		};
+		C3E686861B298E4100EEC3E6 /* TC1 */ = {
+			isa = PBXGroup;
+			children = (
+				C3E686871B298E4100EEC3E6 /* output.txt */,
+				C3E686881B298E4100EEC3E6 /* testCase01 */,
+				C3E686891B298E4100EEC3E6 /* testMap */,
+			);
+			path = TC1;
+			sourceTree = "<group>";
+		};
+		C3E6868A1B298E4100EEC3E6 /* TC2 */ = {
+			isa = PBXGroup;
+			children = (
+				C3E6868B1B298E4100EEC3E6 /* output.txt */,
+				C3E6868C1B298E4100EEC3E6 /* testCase02 */,
+				C3E6868D1B298E4100EEC3E6 /* testMap */,
+			);
+			path = TC2;
+			sourceTree = "<group>";
+		};
+		C3E6868E1B298E4100EEC3E6 /* TC3_basic */ = {
+			isa = PBXGroup;
+			children = (
+				C3E6868F1B298E4100EEC3E6 /* output.txt */,
+				C3E686901B298E4100EEC3E6 /* testCase03 */,
+				C3E686911B298E4100EEC3E6 /* testMap */,
+			);
+			path = TC3_basic;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -128,6 +184,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C331B9B61B28728800C03DB6 /* Graph.cpp in Sources */,
 				C331B9941B25B49700C03DB6 /* main.cpp in Sources */,
 				C331B9AF1B26B37300C03DB6 /* HeapType.cpp in Sources */,
 				C331B9B21B27122D00C03DB6 /* HashTable.cpp in Sources */,

@@ -1,9 +1,11 @@
 #include<iostream>
+#include <fstream>
 #include<string>
 #include<iomanip> //using setw()
 #include<sstream>
 #include "HeapType.cpp"
 #include "HashTable.cpp"
+#include "Graph.h"
 
 using namespace std;
 
@@ -15,7 +17,7 @@ enum xStationType {
     Danshui, Hongshulin, Beitou,
     Shilin, Zhongshan, Xinpu,
     Ximen, Liuzhangli, Muzha,
-    Guting, Gongguan, Jingmei };
+    Guting, Gongguan, Jingmei, NoStation = -1 };
 
 //typedef char LicenseType[5];
 struct LicenseType {
@@ -41,6 +43,7 @@ private:
 };
 
 struct BikeType{
+    BikeType() : Mileage(0) {}
     LicenseType License;
     StatusType Status;
     int Mileage; /* most recently rented mileage */
@@ -57,7 +60,7 @@ bool operator<(const BikeType& bp1, const BikeType& bp2) {
 }
 ostream& operator<< (ostream &out, BikeType &bike)
 {
-    out << bike.Mileage;
+    cout << bike.Mileage;
     return out;
 }
 // Use HeapType class instead~~
@@ -188,8 +191,9 @@ void JunkIt(string License){
 
 template<class K, class V>
 void printHashTable(HashTable<K, V>& ht) {
-    for(unsigned i = 0; i < ht.size(); ++i) {
+    for(int i = 0; i < ht.size(); ++i) {
         if( ht[i].size() > 0 ) {
+            cout << "[" << i << "]";
             typename HashTable<K,V>::ListType::NodeType* node_ptr = ht[i].front;
             while( node_ptr ) {
                 cout << node_ptr->key;
@@ -202,13 +206,12 @@ void printHashTable(HashTable<K, V>& ht) {
         }
     }
 }
-void HashReport(HashTable<LicenseType, BikePtr>& ht){
-    printHashTable(ht);
+void HashReport(){
 }
 
 // print a heap in console
-template<class T>
-void printHeap(HeapType<T>& heap) {
+template<class T, class Comp>
+void printHeap(HeapType<T, Comp>& heap) {
     for(int i = 0; i < heap.size(); i = 2*i + 1) {
         for(int j = 0; j <= i; ++j) {
             cout << heap[i+j];
@@ -250,22 +253,153 @@ int hashfunc(LicenseType key) {
     return hash;
 }
 
-int main(){
+xStationType getStationType(const string& stationName) {
+    if(stationName == "Danshui")
+        return Danshui;
+    else if(stationName == "Hongshulin")
+        return Hongshulin;
+    else if(stationName == "Beitou")
+        return Beitou;
+    else if(stationName =="Shilin")
+        return Shilin;
+    else if(stationName =="Zhongshan")
+        return Zhongshan;
+    else if(stationName =="Xinpu")
+        return Xinpu;
+    else if(stationName =="Ximen")
+        return Ximen;
+    else if(stationName =="Liuzhangli")
+        return Liuzhangli;
+    else if(stationName =="Muzha")
+        return Muzha;
+    else if(stationName =="Guting")
+        return Guting;
+    else if(stationName =="Gongguan")
+        return Gongguan;
+    else if(stationName =="Jingmei")
+        return Jingmei;
+    return NoStation;
+}
+
+string stationTypeToString(int stationName) {
+    if(stationName == Danshui)
+        return "Danshui";
+    else if(stationName == Hongshulin)
+        return "Hongshulin";
+    else if(stationName == Beitou)
+        return "Beitou";
+    else if(stationName == Shilin)
+        return "Shilin";
+    else if(stationName == Zhongshan)
+        return "Zhongshan";
+    else if(stationName == Xinpu)
+        return "Xinpu";
+    else if(stationName == Ximen)
+        return "Ximen";
+    else if(stationName == Liuzhangli)
+        return "Liuzhangli";
+    else if(stationName == Muzha)
+        return "Muzha";
+    else if(stationName == Guting)
+        return "Guting";
+    else if(stationName == Gongguan)
+        return "Gongguan";
+    else if(stationName == Jingmei)
+        return "Jingmei";
+    return "NoStation";
+}
+
+int main(int argc, char* argv[]){
     
-    // Example using the HeapType class
+    ////////////////////////////////////////////////////////////////////////////////////////
+    // Graph Test (station map)
+    // open the station map file
+    ifstream in_stream;
+    in_stream.open("Testcases/TC1/testMap");
+    streambuf *cinbuf = cin.rdbuf();
+    cin.rdbuf( in_stream.rdbuf() );
+    
+    // declase the station map as a graph
+    Graph stationMap(12);
+    // parse the station map file into graph
+    string str;
+    while( cin >> str) {
+        xStationType from = getStationType(str);
+        cin >> str;
+        xStationType to = getStationType(str);
+        cin >> str;
+        int distance;
+        try {
+            distance = stoi(str);
+        }
+        catch(...) {
+            cerr << "Parse error : Could not parse distance between " << stationTypeToString(from) << " and " << stationTypeToString(to) << endl;
+            exit(-1);
+        }
+        if( from != NoStation && to != NoStation )
+            stationMap.insert(from, to, distance);
+        else
+            cerr << "Parse error : Could not parse station names : " << stationTypeToString(from) << " | " << stationTypeToString(to) << endl;
+    }
+    
+    // restore iostream, close filestream
+    cin.rdbuf( cinbuf );
+    in_stream.close();
+    
+    // print the station map (printed as integers, because that's how it's stored)
+    // 0 is Danshui, 1 is Hongshulin etc.
+    cout << "   StationMap Graph    " << endl;
+    cout << stationMap << endl;
+    
+    
+    cout << "   Shortest paths from Danshui to all other stations   " << endl;
+    // get the "previous station vector" from the dijkstra shortest path algorithm
+    // this gives all shortests paths from, in this case, Danshui station
+    vector<int> prev = stationMap.dijkstra(Danshui);
+    // Calculate path to each station, and print the paths :)
+    for(int i = 0; i < stationMap.size(); i++) {
+        forward_list<int> shortest_path = stationMap.getPath(prev, i);
+        if( ! shortest_path.empty() ) {
+            
+            for(forward_list<int>::iterator it = shortest_path.begin();;) {
+                cout << stationTypeToString(*it);
+                if( ++it != shortest_path.end() )
+                    cout << "->";
+                else break;
+            }
+            cout << endl;
+        }
+    }
+    
+    // End of Graph Test
+    ////////////////////////////////////////////////////////////////////////////////////////
+    
+    ////////////////////////////////////////////////////////////////////////////////////////
+    // HeapType Test
     /*
+    struct BikeMin {
+        bool operator()(const BikeType& b1, const BikeType& b2) {
+            return b1.Mileage < b2.Mileage;
+        }
+    };
+    
     HeapType<BikeType> bikeHeap;
     for(int i = 0; i < 10; ++i) {
-        BikeType b;
-        b.Mileage = random() % 100;
-        bikeHeap.insert(b);
+        BikeType a;
+        a.Mileage = random() % 100;
+        bikeHeap.insert(a);
     }
     printHeap(bikeHeap);
      */
     
-    // HashTable Example
-    typedef HashTable<LicenseType, BikePtr> BikeTable;
+    // End of HeapType Test
+    ////////////////////////////////////////////////////////////////////////////////////////
     
+    
+    ////////////////////////////////////////////////////////////////////////////////////////
+    // HashTable Test
+    /*
+    typedef HashTable<LicenseType, BikePtr> BikeTable;
     BikeTable bikeTable(256, &hashfunc);
     BikeType b1, b2, b3;
     for(int i = 0; i < 5; i++) {
@@ -277,6 +411,11 @@ int main(){
     bikeTable.insert(b2.License, &b2);
     bikeTable.insert(b3.License, &b3);
     printHashTable(bikeTable);
+     
+    // End of HashTable Test
+    ////////////////////////////////////////////////////////////////////////////////////////
+    */
+    
     /*
     BikeTable::NodeType* x = bikeTable.get(b1.License);
     if( x ) {
@@ -359,4 +498,6 @@ int main(){
             HashReport();
         }
     }
+    
+    return 0;
 }
