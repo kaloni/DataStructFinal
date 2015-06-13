@@ -65,11 +65,11 @@ void HTList<K,V>::erase(K key) {
 
 // return pointer to node with key, null if not found
 template<class K, class V>
-HTNode<K,V>* HTList<K,V>::get(K key) {
+V* HTList<K,V>::get(K key) {
     NodeType* cur_ptr = front;
     while( cur_ptr ) {
         if( cur_ptr->key == key )
-            return cur_ptr;
+            return cur_ptr->val;
         cur_ptr = cur_ptr->next;
     }
     return nullptr;
@@ -94,7 +94,7 @@ void HashTable<K,V>::erase(K key) {
 
 // return node pointer to first node found with certain key
 template<class K, class V>
-HTNode<K,V>* HashTable<K,V>::get(K key) {
+V* HashTable<K,V>::get(K key) {
     int index = hashfunc(key);
     return table[index].get(key);
 }

@@ -35,15 +35,15 @@ public:
     HTList() : m_size(0), front(nullptr), back(nullptr) {}
     virtual ~HTList();
     void push_back(NodeType* node);
-    NodeType* get(K key);
+    V* get(K key);
     void erase(K key);
     int size() { return m_size; }
-    
+
     // iterator
     typedef HTListIterator<K, V> iterator;
     iterator begin() { return iterator(front); }
     iterator end() { return iterator(nullptr); }
-    
+
 };
 
 template<class K, class V>
@@ -72,12 +72,12 @@ public:
     HashTable(int size, int (*hashfunc)(K key));
     void insert(K key, V val);
     void erase(K key);
-    NodeType* get(K key);
+    V* get(K key);
     int size() const { return static_cast<int>(table.size()); }
-    
+
     // operators
     ListType& operator[](unsigned index) { return table[index]; }
-    
+
     // iterator
     iterator begin() { return table.begin(); }
     iterator end() { return table.end(); }
