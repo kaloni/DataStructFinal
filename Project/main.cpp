@@ -6,7 +6,7 @@
 #include<stdlib.h>
 #include "HeapType.cpp"
 #include "HashTable.cpp"
-#include "Graph.h"
+//#include "Graph.h"
 
 using namespace std;
 
@@ -217,14 +217,14 @@ string classToStr(ClassType classtype) {
 }
 
 void NewBike(ClassType Class, string License, int Mile, xStationType StationName, HashTable<LicenseType, BikePtr>&ht ){
-    
+
     BikeType *newnode = new BikeType(LicenseType(License), Class, Mile, StationName);
     Station[StationName].Num[Class]++;
     Station[StationName].add(newnode);
     ht.insert(newnode->License, newnode);
-    
+
     cout << "New Bike is recieved by Station " << stationTypeToString(StationName) << "." << endl;
-    
+
     /*
     //cout<<Class<<" "<<License<<" "<<Mile<<" "<<StationName<<endl;
     newnode->Class=Class;
@@ -249,7 +249,7 @@ void NewBike(ClassType Class, string License, int Mile, xStationType StationName
     LicenseTag = temp;
 
     cout<<LicenseTag<<endl;
-    
+
     newnode->Mileage=Mile;
     newnode->Station=StationName;
     newnode->Status=Free;
@@ -433,13 +433,13 @@ int main(int argc, char* argv[]){
 
     BikeTable bikeTable(256, &hashfunc);
     BikeHeap bikeHeap;
-    
+
     // This is how we read from file
     ifstream in_stream;
     in_stream.open("Testcases/TC2/testCase02");
     streambuf *cinbuf = cin.rdbuf();
     cin.rdbuf( in_stream.rdbuf() );
-    
+
     string state;
     string move;
     string Class,License,Station;
@@ -447,10 +447,10 @@ int main(int argc, char* argv[]){
     xStationType StationName = Danshui;
     int Mile;
     while(getline(cin, state)){
-        
+
         istringstream iss(state);
         iss>>move;
-        
+
         if(move=="NewBike"){
             iss >> Class>>License>>Mile>>Station;
             Type = strToClass(Class);
@@ -469,11 +469,11 @@ int main(int argc, char* argv[]){
             HashReport();
         }
     }
-    
+
     // Remember to close the ifstream and restore cin buffer
     cin.rdbuf( cinbuf );
     in_stream.close();
-    
+
     ////////////////// Testing ////////////////
     ////////////////////////////////////////////////////////////////////////////////////////
     // Graph Test (station map)
@@ -483,7 +483,7 @@ int main(int argc, char* argv[]){
      in_stream.open("Testcases/TC1/testMap");
      streambuf *cinbuf = cin.rdbuf();
      cin.rdbuf( in_stream.rdbuf() );
-     
+
      // declase the station map as a graph
      Graph stationMap(12);
      // parse the station map file into graph
@@ -508,17 +508,17 @@ int main(int argc, char* argv[]){
      else
      cerr << "Parse error : Could not parse station names : " << stationTypeToString(from) << " | " << stationTypeToString(to) << endl;
      }
-     
+
      // restore iostream, close filestream
      cin.rdbuf( cinbuf );
      in_stream.close();
-     
+
      // print the station map (printed as integers, because that's how it's stored)
      // 0 is Danshui, 1 is Hongshulin etc.
      cout << "   StationMap Graph    " << endl;
      cout << stationMap << endl;
-     
-     
+
+
      cout << "   Shortest paths from Danshui to all other stations   " << endl;
      // get the "previous station vector" from the dijkstra shortest path algorithm
      // this gives all shortests paths from, in this case, Danshui station
@@ -527,7 +527,7 @@ int main(int argc, char* argv[]){
      for(int i = 0; i < stationMap.size(); i++) {
      forward_list<int> shortest_path = stationMap.getPath(prev, i);
      if( ! shortest_path.empty() ) {
-     
+
      for(forward_list<int>::iterator it = shortest_path.begin();;) {
      cout << stationTypeToString(*it);
      if( ++it != shortest_path.end() )
@@ -540,7 +540,7 @@ int main(int argc, char* argv[]){
      */
     // End of Graph Test
     ////////////////////////////////////////////////////////////////////////////////////////
-    
+
     ////////////////////////////////////////////////////////////////////////////////////////
     // HeapType Test
     /*
@@ -549,7 +549,7 @@ int main(int argc, char* argv[]){
      return b1.Mileage < b2.Mileage;
      }
      };
-     
+
      BikePtr a,b,c;
      a = new BikeType;
      b = new BikeType;
@@ -564,13 +564,13 @@ int main(int argc, char* argv[]){
      bikeHeap.insert(a);
      bikeHeap.insert(b);
      bikeHeap.insert(c);
-     
+
      printHeap(bikeHeap);
-     
+
      int index = bikeHeap.find(b, &licenseComp);
      cout << "index = " << index << endl;
      cout << "mileage = " << b->Mileage << endl;
-     
+
      delete a;
      delete b;
      delete c;
@@ -578,8 +578,8 @@ int main(int argc, char* argv[]){
      */
     // End of HeapType Test
     ////////////////////////////////////////////////////////////////////////////////////////
-    
-    
+
+
     ////////////////////////////////////////////////////////////////////////////////////////
     // HashTable Test
     /*
@@ -598,7 +598,7 @@ int main(int argc, char* argv[]){
     // End of HashTable Test
     ////////////////////////////////////////////////////////////////////////////////////////
     //*/
-    
+
     /*
      BikeTable::NodeType* x = bikeTable.get(b1.License);
      if( x ) {
@@ -608,7 +608,7 @@ int main(int argc, char* argv[]){
      }
      cout << endl;
      }
-     
+
      int hash = hashfunc(b1.License);
      BikeTable::ListType list = bikeTable[hash];
      bool b = (it_1 != it_2);
