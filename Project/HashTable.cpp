@@ -31,6 +31,7 @@ void HTList<K,V>::push_back(NodeType* node) {
     else {
         front = back = node;
     }
+    back->next = NULL;
     m_size++;
 }
 

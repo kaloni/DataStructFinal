@@ -369,7 +369,7 @@ template<class K, class V>
 void printHashTable(HashTable<K, V>& ht) {
     for(int i = 0; i < ht.size(); ++i) {
         if( ht[i].size() > 0 ) {
-            cout << "[" << i << "]";
+            cout << i << " ";
             typename HashTable<K,V>::ListType::NodeType* node_ptr = ht[i].front;
             while( node_ptr ) {
                 cout << node_ptr->key;
@@ -457,7 +457,7 @@ int main(int argc, char* argv[]){
 
     // This is how we read from file
     ifstream in_stream;
-    in_stream.open("Testcases/TC3_basic/testCase03");
+    in_stream.open("Testcases/TC2/testCase02");
     streambuf *cinbuf = cin.rdbuf();
     cin.rdbuf( in_stream.rdbuf() );
 
