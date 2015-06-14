@@ -387,7 +387,7 @@ void printHashTable(HashTable<K, V>& ht) {
             while( node_ptr ) {
                 cout << node_ptr->key;
                 if( node_ptr->next ) {
-                    cout << "->";
+                        cout << "->";
                 }
                 node_ptr = node_ptr->next;
             }
@@ -428,24 +428,6 @@ unsigned createMask(unsigned start, unsigned end) {
 }
 
 // The hashfunction used by our program
-/*
-int hashfunc(LicenseType key) {
-    unsigned hash = (unsigned)key[0]-48;
-    int i=1;
-    while(i<5){
-        if(isdigit(key[i]))
-            hash = hash*31+(key[i]-48);
-        else
-            hash = hash*31+(key[i]-55);
-        i++;
-    }
-    hash &= createMask(11,18);
-    hash >>= 10;
-    return hash;
-}
-*/
-
-// The hashfunction used by our program
 int hashfunc(LicenseType License) {
     
     char input[5];
@@ -482,7 +464,6 @@ int hashfunc(LicenseType License) {
 }
 
 int main(int argc, char* argv[]){
-    
     
     BikeTable bikeTable(256, &hashfunc);
     BikeHeap bikeHeap;
