@@ -15,8 +15,8 @@
 // Node struct
 template<class K, class V>
 struct HTNode {
-    HTNode() = default;
-    HTNode(K k, V v) : key(k), val(v) {}
+    HTNode() : next(nullptr) {}
+    HTNode(K k, V v) : key(k), val(v), next(nullptr) {}
     K key;
     V val;
     HTNode* next;
@@ -39,12 +39,12 @@ public:
     V* get(K key);
     void erase(K key);
     int size() { return m_size; }
-    
+
     // iterator
     typedef HTListIterator<K, V> iterator;
     iterator begin() { return iterator(front); }
     iterator end() { return iterator(nullptr); }
-    
+
 };
 
 template<class K, class V>
@@ -56,7 +56,7 @@ public:
     void operator++() { node = node->next; }
     bool operator==(HTListIterator& it) { return node == &(*it); }
     bool operator!=(HTListIterator& it) { return !(operator==(it)); }
-    NodeType& operator*() { return *node; }
+    NodeType& operator*() { return node->val; }
     NodeType* operator->() { return &(operator*()); }
 private:
     NodeType* node;
@@ -76,10 +76,10 @@ public:
     void erase(K key);
     V* get(K key);
     int size() const { return static_cast<int>(table.size()); }
-    
+
     // operators
     ListType& operator[](unsigned index) { return table[index]; }
-    
+
     // iterator
     iterator begin() { return table.begin(); }
     iterator end() { return table.end(); }

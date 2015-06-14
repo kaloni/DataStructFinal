@@ -9,6 +9,7 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
+<<<<<<< HEAD
             filePath = "Project/main.cpp"
             timestampString = "455897759.843922"
             startingColumnNumber = "9223372036854775807"
@@ -27,10 +28,14 @@
             continueAfterRunningActions = "No"
             filePath = "Project/HashTable.cpp"
             timestampString = "455736382.044485"
+=======
+            filePath = "Project/HashTable.cpp"
+            timestampString = "455985730.93372"
+>>>>>>> errorbranch
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
+            startingLineNumber = "124"
+            endingLineNumber = "124"
             landmarkName = "insert(K key, V val)"
             landmarkType = "7">
          </BreakpointContent>
@@ -42,6 +47,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Project/main.cpp"
+<<<<<<< HEAD
             timestampString = "455896257.484649"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
@@ -63,6 +69,13 @@
             endingLineNumber = "449"
             landmarkName = "main(int argc, char* argv[])"
             landmarkType = "7">
+=======
+            timestampString = "455953936.133826"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "62"
+            endingLineNumber = "62">
+>>>>>>> errorbranch
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -72,11 +85,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Project/Graph.cpp"
-            timestampString = "455707738.79273"
+            timestampString = "455978285.180021"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
             landmarkName = "Graph::dijkstra(int from)"
             landmarkType = "5">
          </BreakpointContent>
@@ -88,76 +101,60 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Project/Graph.cpp"
-            timestampString = "455707738.79273"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
-            landmarkName = "Graph::dijkstra(int from)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Project/Graph.cpp"
-            timestampString = "455707738.79273"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
-            landmarkName = "Graph::dijkstra(int from)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Project/Graph.cpp"
-            timestampString = "455707738.79273"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
-            landmarkName = "Graph::dijkstra(int from)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Project/HeapType.cpp"
-            timestampString = "455699983.255022"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "73"
-            endingLineNumber = "73"
-            landmarkName = "find(const T&amp; elem)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Project/HeapType.cpp"
-            timestampString = "455700004.436501"
+            timestampString = "455978285.180021"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "54"
             endingLineNumber = "54"
-            landmarkName = "find(const T&amp; elem)"
+            landmarkName = "Graph::dijkstra(int from)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Project/Graph.cpp"
+            timestampString = "455978285.180021"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "Graph::dijkstra(int from)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Project/Graph.cpp"
+            timestampString = "455978285.180021"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
+            landmarkName = "Graph::dijkstra(int from)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Project/HeapType.cpp"
+            timestampString = "455983329.393339"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
+            landmarkName = "find(const T&amp; elem, bool (*findComp)(T t1, T t2))"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -168,6 +165,23 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Project/HeapType.cpp"
+            timestampString = "455983329.393339"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
+            landmarkName = "find(const T&amp; elem, bool (*findComp)(T t1, T t2))"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Project/HeapType.cpp"
+<<<<<<< HEAD
             timestampString = "455700006.204592"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
@@ -189,6 +203,15 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "318"
             endingLineNumber = "318">
+=======
+            timestampString = "455983329.393339"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "find(const T&amp; elem, bool (*findComp)(T t1, T t2))"
+            landmarkType = "7">
+>>>>>>> errorbranch
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

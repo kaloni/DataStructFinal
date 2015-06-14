@@ -11,9 +11,21 @@ using namespace std;
 template<class T>
 struct MaxComp {
     bool operator()(const T& t1, const T& t2) const {
-        return !(t1 < t2);
+        return (t1 > t2);
     }
 };
+
+template<class T>
+struct MaxPtrComp {
+    bool operator()(T* ptr_1, T* ptr_2) const {
+        return !(*ptr_1 < *ptr_2);
+    }
+};
+
+template<class T>
+bool stdFindComp(T t1, T t2) {
+    return t1 == t2;
+}
 
 template<class T, class Comp = MaxComp<T> >
 class HeapType {
@@ -26,7 +38,7 @@ public:
     void remove(int index);
     void bubbleUp(int index);
     void bubbleDown(int index);
-    int find(const T& elem);
+    int find(const T& elem, bool (*findComp)(T t1, T t2) = &stdFindComp);
     int size() const {return static_cast<int>(innerHeap.size()); }
     bool empty() { return innerHeap.empty(); }
     

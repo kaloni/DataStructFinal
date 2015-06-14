@@ -26,42 +26,45 @@ void Graph::insert(int from, int to, int weight) {
     if( ! (from < adj_list.size() && to < adj_list.size() ) ) {
         adj_list.resize(max(from,to));
     }
-    
+
     adj_list[from].insert(make_pair(to, weight));
     adj_list[to].insert(make_pair(from, weight));
 }
 
+bool intComp(int i, int j) {
+    return i == j;
+}
+
 vector<int> Graph::dijkstra(int from) {
-    
+
     vector<int> prev(size(), -1);
     vector<int> distance(size(), numeric_limits<int>::max());
     distance[from] = 0;
     HeapType<int, GraphComp> unvisited(GraphComp(from, distance));
-    
+
     distance[from] = 0;
-    
+
     for(int i = 0; i < size(); ++i) {
         unvisited.insert(i);
     }
-    
+
     while( ! unvisited.empty() ) {
-        
+
         int cur_min = unvisited.top();
-        
+
         for(map<int,int>::iterator it = adj_list[cur_min].begin(); it != adj_list[cur_min].end(); ++it) {
             if( distance[cur_min] + it->second < distance[it->first] ) {
                 distance[it->first] = distance[cur_min] + it->second;
                 prev[it->first] = cur_min;
-                int heap_index = unvisited.find(it->first);
+                int heap_index = unvisited.find(it->first, &intComp);
                 // if( heap_index >= 0 )
                 unvisited.bubbleUp(heap_index);
             }
         }
-        
+
         unvisited.pop();
     }
-    
-    
+
     return prev;
 }
 

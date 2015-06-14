@@ -43,6 +43,9 @@
 		C3E6868F1B298E4100EEC3E6 /* output.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = output.txt; sourceTree = "<group>"; };
 		C3E686901B298E4100EEC3E6 /* testCase03 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testCase03; sourceTree = "<group>"; };
 		C3E686911B298E4100EEC3E6 /* testMap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testMap; sourceTree = "<group>"; };
+		C3E686971B2DBB6700EEC3E6 /* test2_output.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test2_output.txt; sourceTree = "<group>"; };
+		C3E686981B2DC7F500EEC3E6 /* test1_output.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test1_output.txt; sourceTree = "<group>"; };
+		C3E686991B2DC80500EEC3E6 /* test3_output.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test3_output.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +106,7 @@
 			children = (
 				C3E686871B298E4100EEC3E6 /* output.txt */,
 				C3E686881B298E4100EEC3E6 /* testCase01 */,
+				C3E686981B2DC7F500EEC3E6 /* test1_output.txt */,
 				C3E686891B298E4100EEC3E6 /* testMap */,
 			);
 			path = TC1;
@@ -113,6 +117,7 @@
 			children = (
 				C3E6868B1B298E4100EEC3E6 /* output.txt */,
 				C3E6868C1B298E4100EEC3E6 /* testCase02 */,
+				C3E686971B2DBB6700EEC3E6 /* test2_output.txt */,
 				C3E6868D1B298E4100EEC3E6 /* testMap */,
 			);
 			path = TC2;
@@ -122,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				C3E6868F1B298E4100EEC3E6 /* output.txt */,
+				C3E686991B2DC80500EEC3E6 /* test3_output.txt */,
 				C3E686901B298E4100EEC3E6 /* testCase03 */,
 				C3E686911B298E4100EEC3E6 /* testMap */,
 			);
