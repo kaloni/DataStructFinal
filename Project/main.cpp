@@ -136,12 +136,94 @@ struct StationType{
     }
 }Station[12];
 
+xStationType strToStationType(const string& stationName) {
+    if(stationName == "Danshui")
+        return Danshui;
+    else if(stationName == "Hongshulin")
+        return Hongshulin;
+    else if(stationName == "Beitou")
+        return Beitou;
+    else if(stationName =="Shilin")
+        return Shilin;
+    else if(stationName =="Zhongshan")
+        return Zhongshan;
+    else if(stationName =="Xinpu")
+        return Xinpu;
+    else if(stationName =="Ximen")
+        return Ximen;
+    else if(stationName =="Liuzhangli")
+        return Liuzhangli;
+    else if(stationName =="Muzha")
+        return Muzha;
+    else if(stationName =="Guting")
+        return Guting;
+    else if(stationName =="Gongguan")
+        return Gongguan;
+    else if(stationName =="Jingmei")
+        return Jingmei;
+    return NoStation;
+}
+
+string stationTypeToString(int stationName) {
+    if(stationName == Danshui)
+        return "Danshui";
+    else if(stationName == Hongshulin)
+        return "Hongshulin";
+    else if(stationName == Beitou)
+        return "Beitou";
+    else if(stationName == Shilin)
+        return "Shilin";
+    else if(stationName == Zhongshan)
+        return "Zhongshan";
+    else if(stationName == Xinpu)
+        return "Xinpu";
+    else if(stationName == Ximen)
+        return "Ximen";
+    else if(stationName == Liuzhangli)
+        return "Liuzhangli";
+    else if(stationName == Muzha)
+        return "Muzha";
+    else if(stationName == Guting)
+        return "Guting";
+    else if(stationName == Gongguan)
+        return "Gongguan";
+    else if(stationName == Jingmei)
+        return "Jingmei";
+    return "NoStation";
+}
+
+ClassType strToClass(string str) {
+    if(str == "Electric")
+        return Electric;
+    else if(str == "Lady")
+        return Lady;
+    else if(str == "Road")
+        return Road;
+    else if(str == "Hybrid")
+        return Hybrid;
+    return NoClass;
+}
+
+string classToStr(ClassType classtype) {
+    if(classtype == Electric)
+        return "Electric";
+    else if(classtype == Lady)
+        return "Lady";
+    else if(classtype == Road)
+        return "Road";
+    else if(classtype == Hybrid)
+        return "Hybrid";
+    return "NoClass";
+}
+
 void NewBike(ClassType Class, string License, int Mile, xStationType StationName, HashTable<LicenseType, BikePtr>&ht ){
     
     BikeType *newnode = new BikeType(LicenseType(License), Class, Mile, StationName);
     Station[StationName].Num[Class]++;
     Station[StationName].add(newnode);
     ht.insert(newnode->License, newnode);
+    
+    cout << "New Bike is recieved by Station " << stationTypeToString(StationName) << "." << endl;
     
     /*
     //cout<<Class<<" "<<License<<" "<<Mile<<" "<<StationName<<endl;
@@ -215,16 +297,16 @@ void NewBike(ClassType Class, string License, int Mile, xStationType StationName
 //template<class K, class V>
 void Inquire(string Licensestr, HashTable<LicenseType, BikePtr>& ht){
 
-    cout << setw(15) << "License" << setw(15) << "Mileage"<<setw(15) << "Class" << setw(15) << "Station"<<endl;
-    cout<<"============================================================"<<endl;
     LicenseType License(Licensestr);
     BikePtr* bikeMetaPtr = ht.get(License);
     if( bikeMetaPtr ) {
         BikePtr bike = *bikeMetaPtr;
         xStationType station = bike->Station;
-        ClassType Class=bike->Class;
+        ClassType Class = bike->Class;
         int mileage = bike->Mileage;
-        cout << setw(15) << License<< setw(15) <<mileage<<setw(15) << Class<< setw(15) << station<<endl;
+        cout << setw(15) << "License" << setw(15) << "Mileage"<<setw(15) << "Class" << setw(15) << "Station"<<endl;
+        cout<<"============================================================"<< endl;
+        cout << setw(11) << License << setw(15) << mileage<<setw(15) << classToStr(Class) << setw(15) << stationTypeToString(station) << endl << endl;
     }
     else {
         cout << "Bike " << Licensestr << " does not belong to our company." << endl;
@@ -345,74 +427,6 @@ int hashfunc(LicenseType key) {
     hash &= createMask(11,18);
     hash >>= 10;
     return hash;
-}
-
-xStationType strToStationType(const string& stationName) {
-    if(stationName == "Danshui")
-        return Danshui;
-    else if(stationName == "Hongshulin")
-        return Hongshulin;
-    else if(stationName == "Beitou")
-        return Beitou;
-    else if(stationName =="Shilin")
-        return Shilin;
-    else if(stationName =="Zhongshan")
-        return Zhongshan;
-    else if(stationName =="Xinpu")
-        return Xinpu;
-    else if(stationName =="Ximen")
-        return Ximen;
-    else if(stationName =="Liuzhangli")
-        return Liuzhangli;
-    else if(stationName =="Muzha")
-        return Muzha;
-    else if(stationName =="Guting")
-        return Guting;
-    else if(stationName =="Gongguan")
-        return Gongguan;
-    else if(stationName =="Jingmei")
-        return Jingmei;
-    return NoStation;
-}
-
-string stationTypeToString(int stationName) {
-    if(stationName == Danshui)
-        return "Danshui";
-    else if(stationName == Hongshulin)
-        return "Hongshulin";
-    else if(stationName == Beitou)
-        return "Beitou";
-    else if(stationName == Shilin)
-        return "Shilin";
-    else if(stationName == Zhongshan)
-        return "Zhongshan";
-    else if(stationName == Xinpu)
-        return "Xinpu";
-    else if(stationName == Ximen)
-        return "Ximen";
-    else if(stationName == Liuzhangli)
-        return "Liuzhangli";
-    else if(stationName == Muzha)
-        return "Muzha";
-    else if(stationName == Guting)
-        return "Guting";
-    else if(stationName == Gongguan)
-        return "Gongguan";
-    else if(stationName == Jingmei)
-        return "Jingmei";
-    return "NoStation";
-}
-
-ClassType strToClass(string str) {
-    if(str == "Electric")
-        return Electric;
-    else if(str == "Lady")
-        return Lady;
-    else if(str == "Road")
-        return Road;
-    else if(str == "Hybrid")
-        return Hybrid;
-    return NoClass;
 }
 
 int main(int argc, char* argv[]){
