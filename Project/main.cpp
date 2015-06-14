@@ -436,7 +436,7 @@ int main(int argc, char* argv[]){
     
     // This is how we read from file
     ifstream in_stream;
-    in_stream.open("Testcases/TC1/testCase01");
+    in_stream.open("Testcases/TC2/testCase02");
     streambuf *cinbuf = cin.rdbuf();
     cin.rdbuf( in_stream.rdbuf() );
     
