@@ -348,7 +348,8 @@ void find_bike(string License,HashTable<K, V>& ht){
 }*/
 
 //template<class T, class Comp, class K, class V>
-void JunkIt(string Licensestr, BikeHeap& heap, BikeTable& ht){
+//void JunkIt(string Licensestr, BikeHeap& heap, BikeTable& ht){
+void JunkIt(string Licensestr, BikeTable& ht) {
     
     LicenseType License;
     //License.license;
@@ -362,11 +363,13 @@ void JunkIt(string Licensestr, BikeHeap& heap, BikeTable& ht){
         BikePtr bike = *bikeMetaPtr;
         cout << "Bike " << bike->License << " deleted from " << stationTypeToString(bike->Station) << "." << endl;
         
-        int index = heap.find(bike, &licenseComp);
+        //int index = heap.find(bike, &licenseComp);
+        int index = Station[bike->Station].heaps[bike->Class].find(bike, &licenseComp);
         
         if(index>=0){
             ht.erase(License);
-            heap.remove(index);
+            //heap.remove(index);
+            Station[bike->Station].heaps[bike->Class].remove(index);
             delete bike;
         }
     }
@@ -425,6 +428,7 @@ unsigned createMask(unsigned start, unsigned end) {
 }
 
 // The hashfunction used by our program
+/*
 int hashfunc(LicenseType key) {
     unsigned hash = (unsigned)key[0]-48;
     int i=1;
@@ -439,9 +443,47 @@ int hashfunc(LicenseType key) {
     hash >>= 10;
     return hash;
 }
+*/
+
+// The hashfunction used by our program
+int hashfunc(LicenseType License) {
+    
+    char input[5];
+    int binary[50]={0};
+    int i,j,k;
+    int key=0;
+    for ( i=0 ; i<5 ; i++ )
+        input[i] = License[i];
+    
+    for(i=0;i<5;i++){
+        if(isdigit(input[i]))
+            key = key*31+(input[i]-48);
+        else
+            key = key*31+(input[i]-55);
+    }
+    i=0;
+    while(key/2!=0){
+        binary[i]=key%2;
+        key=key/2;
+        i++;
+    }
+    binary[i]=key%2;
+    key=0;
+    for(i=10;i<18;i++){
+        k=1;
+        j=i-10;
+        while(j>0){
+            k=k*2;
+            j--;
+        }
+        key=key+k*binary[i];
+    }
+    return key;
+}
 
 int main(int argc, char* argv[]){
-
+    
+    
     BikeTable bikeTable(256, &hashfunc);
     BikeHeap bikeHeap;
 
@@ -474,7 +516,8 @@ int main(int argc, char* argv[]){
         }
         else if(move=="JunkIt"){
             iss >> License;
-            JunkIt(License, bikeHeap, bikeTable);
+            //JunkIt(License, bikeHeap, bikeTable);
+            JunkIt(License, bikeTable);
         }
         else if(move=="HashReport"){
             //HashReport();
@@ -485,7 +528,7 @@ int main(int argc, char* argv[]){
     // Remember to close the ifstream and restore cin buffer
     cin.rdbuf( cinbuf );
     in_stream.close();
-
+    
     ////////////////// Testing ////////////////
     ////////////////////////////////////////////////////////////////////////////////////////
     // Graph Test (station map)
@@ -587,7 +630,7 @@ int main(int argc, char* argv[]){
      delete b;
      delete c;
      a = b = c = nullptr;
-     */
+    */
     // End of HeapType Test
     ////////////////////////////////////////////////////////////////////////////////////////
 
