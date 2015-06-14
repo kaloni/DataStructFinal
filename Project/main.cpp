@@ -27,6 +27,11 @@ public:
             license[i] = '0';
         }
     }
+    LicenseType(string str) {
+        for(int i = 0; i < 5; ++i) {
+            license[i] = str[i];
+        }
+    }
     char &operator[](int index) {
         return license[index];
     }
@@ -92,17 +97,19 @@ struct StationType{
     BikeHeap HHybrid;
 }Station[12];
 
+/*
 struct HNodeType {
     LicenseType License ;
-    BikePtr Ptr; /* point to the node representing the bike */
-    struct HNodeType *next_ptr; /*point to the next node in the chaining list*/
+    BikePtr Ptr; // point to the node representing the bike
+    struct HNodeType *next_ptr; // point to the next node in the chaining list
 };
 
 struct HTableType {
     HNodeType table[256];
-    /*since each entry in the hash table is a pointer, it will be initialized as NULL;*/
-    int BikeNum; /* the number of bikes in the hash table */
+    //since each entry in the hash table is a pointer, it will be initialized as NULL;
+    int BikeNum; // the number of bikes in the hash table
 };
+*/
 
 void NewBike(ClassType Class, string License, int Mile, xStationType StationName){
     //cout<<Class<<" "<<License<<" "<<Mile<<" "<<StationName<<endl;
@@ -185,7 +192,35 @@ void Inquire(string License){
     
 }
 
-void JunkIt(string License){
+void StationReport(xStationType statName) {
+    
+}
+
+void UBikeReport() {
+    
+}
+
+void JunkBikePtr(BikePtr bike){
+    
+}
+
+void JunkIt(string license) {
+    
+}
+
+void RentBikePtr(xStationType statName, BikePtr bike) {
+    
+}
+
+int Returns(xStationType statName,  LicenseType license, int mile) {
+    return 0;
+}
+
+void Trans(xStationType statName, LicenseType license) {
+    
+}
+
+void NetSearch(xStationType statName) {
     
 }
 
@@ -314,6 +349,7 @@ int main(int argc, char* argv[]){
     ////////////////////////////////////////////////////////////////////////////////////////
     // Graph Test (station map)
     // open the station map file
+    /*
     ifstream in_stream;
     in_stream.open("Testcases/TC1/testMap");
     streambuf *cinbuf = cin.rdbuf();
@@ -370,7 +406,7 @@ int main(int argc, char* argv[]){
             cout << endl;
         }
     }
-    
+    */
     // End of Graph Test
     ////////////////////////////////////////////////////////////////////////////////////////
     
@@ -383,15 +419,20 @@ int main(int argc, char* argv[]){
         }
     };
     
+    BikeType b;
     HeapType<BikeType> bikeHeap;
     for(int i = 0; i < 10; ++i) {
         BikeType a;
         a.Mileage = random() % 100;
         bikeHeap.insert(a);
+        if( i == 5 )
+            b = a;
     }
     printHeap(bikeHeap);
-     */
     
+    int index = bikeHeap.find(b);
+    cout << "index = " << index << endl;
+    */
     // End of HeapType Test
     ////////////////////////////////////////////////////////////////////////////////////////
     
@@ -411,10 +452,10 @@ int main(int argc, char* argv[]){
     bikeTable.insert(b2.License, &b2);
     bikeTable.insert(b3.License, &b3);
     printHashTable(bikeTable);
-     
+    */
     // End of HashTable Test
     ////////////////////////////////////////////////////////////////////////////////////////
-    */
+    
     
     /*
     BikeTable::NodeType* x = bikeTable.get(b1.License);
@@ -440,6 +481,10 @@ int main(int argc, char* argv[]){
     cout << endl;
     */
     
+    ifstream in_stream;
+    in_stream.open("Testcases/TC1/testCase01");
+    streambuf *cinbuf = cin.rdbuf();
+    cin.rdbuf( in_stream.rdbuf() );
     
     string state;
     string move;
@@ -498,6 +543,10 @@ int main(int argc, char* argv[]){
             HashReport();
         }
     }
+    
+    cin.rdbuf( cinbuf );
+    in_stream.close();
+
     
     return 0;
 }

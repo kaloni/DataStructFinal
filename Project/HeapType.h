@@ -35,6 +35,7 @@ public:
         return innerHeap[index];
     }
     
+    
     // iterator
     typedef typename vector<T>::iterator iterator;
     iterator begin() { return innerHeap.begin(); }

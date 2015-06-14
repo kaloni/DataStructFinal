@@ -10,6 +10,7 @@
 #define __Project__HashTable__
 
 #include <vector>
+#include <iostream>
 
 // Node struct
 template<class K, class V>
@@ -35,7 +36,7 @@ public:
     HTList() : m_size(0), front(nullptr), back(nullptr) {}
     virtual ~HTList();
     void push_back(NodeType* node);
-    NodeType* get(K key);
+    V* get(K key);
     void erase(K key);
     int size() { return m_size; }
     
@@ -66,13 +67,14 @@ template<class K, class V>
 class HashTable {
 public:
     typedef HTNode<K, V> NodeType;
-    typedef HTList<K,V> ListType;
+    typedef HTList<K, V> ListType;
     typedef typename std::vector<HTList<K,V> >::iterator iterator;
     HashTable() = default;
     HashTable(int size, int (*hashfunc)(K key));
+    ~HashTable() = default;
     void insert(K key, V val);
     void erase(K key);
-    NodeType* get(K key);
+    V* get(K key);
     int size() const { return static_cast<int>(table.size()); }
     
     // operators
