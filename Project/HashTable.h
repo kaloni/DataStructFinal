@@ -55,7 +55,7 @@ public:
     void operator++() { node = node->next; }
     bool operator==(HTListIterator& it) { return node == &(*it); }
     bool operator!=(HTListIterator& it) { return !(operator==(it)); }
-    NodeType& operator*() { return *node; }
+    NodeType& operator*() { return node->val; }
     NodeType* operator->() { return &(operator*()); }
 private:
     NodeType* node;

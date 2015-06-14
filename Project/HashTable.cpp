@@ -69,7 +69,7 @@ V* HTList<K,V>::get(K key) {
     NodeType* cur_ptr = front;
     while( cur_ptr ) {
         if( cur_ptr->key == key )
-            return cur_ptr->val;
+            return &(cur_ptr->val);
         cur_ptr = cur_ptr->next;
     }
     return nullptr;

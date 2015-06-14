@@ -51,7 +51,7 @@ void HeapType<T, Comp>::bubbleDown(int index) {
 }
 
 template<class T, class Comp>
-int HeapType<T,Comp>::find(const T& elem) {
+int HeapType<T,Comp>::find(T& elem, bool (*findComp)(T t1, T t2)) {
     stack<int> index_stack;
     index_stack.push(0);
     int cur_index = 0;
@@ -59,17 +59,20 @@ int HeapType<T,Comp>::find(const T& elem) {
         
         cur_index = index_stack.top();
         index_stack.pop();
-        if( elem == innerHeap[cur_index] ) {
+        //if( ( ! comp(elem, innerHeap[cur_index]) ) && (! comp(innerHeap[cur_index], elem) ) ) {
+        if( findComp(elem, innerHeap[cur_index]) )
             return cur_index;
-        }
+
         int left_index = 2*cur_index + 1;
         int right_index = left_index + 1;
-        if( left_index < innerHeap.size() )
+        if( left_index < innerHeap.size() ) {
             if( comp(innerHeap[left_index], elem) )
                 index_stack.push(left_index);
-        if( right_index < innerHeap.size() )
+        }
+        if( right_index < innerHeap.size() ) {
             if( comp(innerHeap[right_index], elem) )
                 index_stack.push(right_index);
+        }
     }
     return -1;
 }
