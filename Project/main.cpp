@@ -374,7 +374,7 @@ void printHashTable(HashTable<K, V>& ht) {
             while( node_ptr ) {
                 cout << node_ptr->key;
                 if( node_ptr->next ) {
-                    cout << "->";
+                        cout << "->";
                 }
                 node_ptr = node_ptr->next;
             }
@@ -414,20 +414,41 @@ unsigned createMask(unsigned start, unsigned end) {
 }
 
 // The hashfunction used by our program
-int hashfunc(LicenseType key) {
-    unsigned hash = (unsigned)key[0]-48;
-    int i=1;
-    while(i<5){
-        if(isdigit(key[i]))
-            hash = hash*31+(key[i]-48);
+int hashfunc(LicenseType License) {
+
+    char input[5];
+    int binary[50]={0};
+    int i,j,k;
+    int key=0;
+    for ( i=0 ; i<5 ; i++ )
+        input[i] = License[i];
+
+    for(i=0;i<5;i++){
+        if(isdigit(input[i]))
+            key = key*31+(input[i]-48);
         else
-            hash = hash*31+(key[i]-55);
+            key = key*31+(input[i]-55);
+    }
+    i=0;
+    while(key/2!=0){
+        binary[i]=key%2;
+        key=key/2;
         i++;
     }
-    hash &= createMask(11,18);
-    hash >>= 10;
-    return hash;
+    binary[i]=key%2;
+    key=0;
+    for(i=10;i<18;i++){
+        k=1;
+        j=i-10;
+        while(j>0){
+            k=k*2;
+            j--;
+        }
+        key=key+k*binary[i];
+    }
+    return key;
 }
+
 
 int main(int argc, char* argv[]){
 
@@ -466,7 +487,7 @@ int main(int argc, char* argv[]){
             JunkIt(License, bikeHeap, bikeTable);
         }
         else if(move=="HashReport"){
-            HashReport();
+            printHashTable(bikeTable);
         }
     }
 
