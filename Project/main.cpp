@@ -349,20 +349,30 @@ void find_bike(string License,HashTable<K, V>& ht){
 
 //template<class T, class Comp, class K, class V>
 void JunkIt(string Licensestr, BikeHeap& heap, BikeTable& ht){
+    
     LicenseType License;
     //License.license;
     int i;
     for(i=0;i<5; i++){
         License.license[i]=Licensestr[i];
     }
-    BikePtr bike = *ht.get(License);
-    int index = heap.find(bike, &licenseComp);
-    if(index>=0){
-        ht.erase(License);
-        heap.remove(index);
-        delete bike;
+    BikePtr* bikeMetaPtr = ht.get(License);
+    if( bikeMetaPtr ) {
+        
+        BikePtr bike = *bikeMetaPtr;
+        cout << "Bike " << bike->License << " deleted from " << stationTypeToString(bike->Station) << "." << endl;
+        
+        int index = heap.find(bike, &licenseComp);
+        
+        if(index>=0){
+            ht.erase(License);
+            heap.remove(index);
+            delete bike;
+        }
     }
-
+    else {
+        cout << "Bike " << Licensestr << " does not belong to our company." << endl;
+    }
 }
 
 template<class K, class V>
@@ -382,6 +392,7 @@ void printHashTable(HashTable<K, V>& ht) {
         }
     }
 }
+
 void HashReport(){
 }
 
@@ -466,7 +477,8 @@ int main(int argc, char* argv[]){
             JunkIt(License, bikeHeap, bikeTable);
         }
         else if(move=="HashReport"){
-            HashReport();
+            //HashReport();
+            printHashTable(bikeTable);
         }
     }
 

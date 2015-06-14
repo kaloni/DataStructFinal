@@ -33,7 +33,7 @@ public:
     void remove(int index);
     void bubbleUp(int index);
     void bubbleDown(int index);
-    int find(T& elem, bool (*findComp)(T t1, T t2));
+    int find(const T& elem, bool (*findComp)(T t1, T t2));
     int size() const {return static_cast<int>(innerHeap.size()); }
     bool empty() { return innerHeap.empty(); }
     
