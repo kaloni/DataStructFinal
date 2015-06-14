@@ -6,6 +6,7 @@
 // if greater -> swap
 template<class T, class Comp>
 void HeapType<T, Comp>::bubbleUp(int index) {
+    
     if(index > 0) {
         int parentIndex = (index - 1)/2;
         //if(innerHeap[parentIndex] < innerHeap[index]) {
@@ -41,7 +42,7 @@ void HeapType<T, Comp>::bubbleDown(int index) {
 
         // if less than maximum child, swap and recurse
         //if( innerHeap[index] < innerHeap[maxChildIndex] ) {
-        if( comp(innerHeap[maxChildIndex], innerHeap[index]) ) {
+        if( index != maxChildIndex && comp(innerHeap[maxChildIndex], innerHeap[index]) ) {
             T tmp = innerHeap[maxChildIndex];
             innerHeap[maxChildIndex] = innerHeap[index];
             innerHeap[index] = tmp;
@@ -53,7 +54,7 @@ void HeapType<T, Comp>::bubbleDown(int index) {
 template<class T, class Comp>
 int HeapType<T,Comp>::find(const T& elem, bool (*findComp)(T t1, T t2)) {
     
-    if( innerHeap.empty() ) {
+    if( ! innerHeap.empty() ) {
         stack<int> index_stack;
         index_stack.push(0);
         int cur_index = 0;
@@ -105,7 +106,7 @@ void HeapType<T, Comp>::pop() {
 // remove a node at some index, then bubble around until the heap is in order again
 template<class T, class Comp>
 void HeapType<T, Comp>::remove(int index) {
-
+    
     T tmp = innerHeap.back();
     innerHeap.pop_back();
     if( index < innerHeap.size() ) {

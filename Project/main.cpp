@@ -223,7 +223,7 @@ void NewBike(ClassType Class, string License, int Mile, xStationType StationName
     Station[StationName].add(newnode);
     ht.insert(newnode->License, newnode);
 
-    cout << "New Bike is recieved by Station " << stationTypeToString(StationName) << "." << endl;
+    cout << "New bike is received by Station " << stationTypeToString(StationName) << "." << endl;
 
     /*
     //cout<<Class<<" "<<License<<" "<<Mile<<" "<<StationName<<endl;
@@ -361,13 +361,13 @@ void JunkIt(string Licensestr, BikeTable& ht) {
     if( bikeMetaPtr ) {
         
         BikePtr bike = *bikeMetaPtr;
-        cout << "Bike " << bike->License << " deleted from " << stationTypeToString(bike->Station) << "." << endl;
+        cout << "Bike " << bike->License << " is deleted from " << stationTypeToString(bike->Station) << "." << endl;
         
         //int index = heap.find(bike, &licenseComp);
         int index = Station[bike->Station].heaps[bike->Class].find(bike, &licenseComp);
-        
+       
+        ht.erase(License);
         if(index>=0){
-            ht.erase(License);
             //heap.remove(index);
             Station[bike->Station].heaps[bike->Class].remove(index);
             delete bike;
@@ -382,7 +382,7 @@ template<class K, class V>
 void printHashTable(HashTable<K, V>& ht) {
     for(int i = 0; i < ht.size(); ++i) {
         if( ht[i].size() > 0 ) {
-            cout << "[" << i << "]";
+            cout << i << " ";
             typename HashTable<K,V>::ListType::NodeType* node_ptr = ht[i].front;
             while( node_ptr ) {
                 cout << node_ptr->key;
@@ -466,13 +466,17 @@ int hashfunc(LicenseType License) {
 int main(int argc, char* argv[]){
     
     BikeTable bikeTable(256, &hashfunc);
-    BikeHeap bikeHeap;
 
     // This is how we read from file
     ifstream in_stream;
     in_stream.open("Testcases/TC2/testCase02");
     streambuf *cinbuf = cin.rdbuf();
     cin.rdbuf( in_stream.rdbuf() );
+    
+    ofstream out_stream;
+    out_stream.open("Testcases/TC2/test2_output.txt");
+    streambuf *coutbuf = cout.rdbuf();
+    cout.rdbuf( out_stream.rdbuf() );
 
     string state;
     string move;
@@ -502,13 +506,16 @@ int main(int argc, char* argv[]){
         }
         else if(move=="HashReport"){
             //HashReport();
+            cout << "Hash Table" << endl;
             printHashTable(bikeTable);
         }
     }
 
     // Remember to close the ifstream and restore cin buffer
     cin.rdbuf( cinbuf );
+    cout.rdbuf( coutbuf );
     in_stream.close();
+    out_stream.close();
     
     ////////////////// Testing ////////////////
     ////////////////////////////////////////////////////////////////////////////////////////
