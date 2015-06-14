@@ -14,8 +14,8 @@
 // Node struct
 template<class K, class V>
 struct HTNode {
-    HTNode() = default;
-    HTNode(K k, V v) : key(k), val(v) {}
+    HTNode() : next(nullptr) {}
+    HTNode(K k, V v) : key(k), val(v), next(nullptr) {}
     K key;
     V val;
     HTNode* next;

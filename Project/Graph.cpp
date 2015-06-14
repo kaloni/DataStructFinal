@@ -31,6 +31,10 @@ void Graph::insert(int from, int to, int weight) {
     adj_list[to].insert(make_pair(from, weight));
 }
 
+bool intComp(int i, int j) {
+    return i == j;
+}
+
 vector<int> Graph::dijkstra(int from) {
 
     vector<int> prev(size(), -1);
@@ -52,7 +56,7 @@ vector<int> Graph::dijkstra(int from) {
             if( distance[cur_min] + it->second < distance[it->first] ) {
                 distance[it->first] = distance[cur_min] + it->second;
                 prev[it->first] = cur_min;
-                int heap_index = unvisited.find(it->first);
+                int heap_index = unvisited.find(it->first, &intComp);
                 // if( heap_index >= 0 )
                 unvisited.bubbleUp(heap_index);
             }

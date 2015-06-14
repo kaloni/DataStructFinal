@@ -22,6 +22,11 @@ struct MaxPtrComp {
     }
 };
 
+template<class T>
+bool stdFindComp(T t1, T t2) {
+    return t1 == t2;
+}
+
 template<class T, class Comp = MaxComp<T> >
 class HeapType {
 public:
@@ -33,7 +38,7 @@ public:
     void remove(int index);
     void bubbleUp(int index);
     void bubbleDown(int index);
-    int find(T& elem, bool (*findComp)(T t1, T t2));
+    int find(const T& elem, bool (*findComp)(T t1, T t2) = &stdFindComp);
     int size() const {return static_cast<int>(innerHeap.size()); }
     bool empty() { return innerHeap.empty(); }
     
