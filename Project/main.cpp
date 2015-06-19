@@ -635,6 +635,11 @@ int hashfunc(LicenseType License) {
 
 int main(int argc, char* argv[]){
     
+    if( argc != 4 ) {
+        cout << "arguments are incorrent" << endl;
+        return 0;
+    }
+    
     BikeTable bikeTable(256, &hashfunc);
     Graph stationMap(12);
     
@@ -642,7 +647,7 @@ int main(int argc, char* argv[]){
     ifstream in_stream;
     streambuf *cinbuf = cin.rdbuf();
     
-    in_stream.open("Testcases/TC3_basic/testMap");
+    in_stream.open(argv[2]);
     cin.rdbuf( in_stream.rdbuf() );
     
     string str;
@@ -667,11 +672,11 @@ int main(int argc, char* argv[]){
     }
     
     in_stream.close();
-    in_stream.open("Testcases/TC3_basic/testCase03");
+    in_stream.open(argv[1]);
     cin.rdbuf( in_stream.rdbuf() );
     
     ofstream out_stream;
-    out_stream.open("Testcases/TC3_basic/test3_output.txt");
+    out_stream.open(argv[3]);
     streambuf *coutbuf = cout.rdbuf();
     cout.rdbuf( out_stream.rdbuf() );
 
