@@ -1,0 +1,32 @@
+New bike is received by Station Xinpu.
+New bike is received by Station Jingmei.
+New bike is received by Station Jingmei.
+New bike is received by Station Jingmei.
+New bike is received by Station Jingmei.
+New bike is received by Station Danshui.
+New bike is received by Station Danshui.
+New bike is received by Station Danshui.
+New bike is received by Station Liuzhangli.
+New bike is received by Station Liuzhangli.
+New bike is received by Station Liuzhangli.
+New bike is received by Station Danshui.
+New bike is received by Station Danshui.
+New bike is received by Station Danshui.
+New bike is received by Station Ximen.
+New bike is received by Station Ximen.
+Hash Table
+11 BBBB0->BBBB1
+99 NTHU0->NTHU1->NTHU2->NTHU3->NTHU4->NTHU5->NTHU6
+103 AAAA0->AAAA1->AAAA2->AAAA3
+151 AC000
+175 CCCC0->CCCC1
+Bike 00006 does not belong to our company.
+Bike 00007 does not belong to our company.
+Bike NTHU1 is deleted from Jingmei.
+Bike AAAA2 is deleted from Liuzhangli.
+Hash Table
+11 BBBB0->BBBB1
+99 NTHU0->NTHU2->NTHU3->NTHU4->NTHU5->NTHU6
+103 AAAA0->AAAA1->AAAA3
+151 AC000
+175 CCCC0->CCCC1

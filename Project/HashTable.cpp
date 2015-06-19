@@ -39,14 +39,21 @@ void HTList<K,V>::push_back(NodeType* node) {
     else {
         front = back = node;
     }
+
     back->next=NULL;
+
+    back->next = nullptr;
+
     m_size++;
 }
 
 // erase a node with a certain key, nothing happens if not found
+
 template<class K, class V>
 void HTList<K,V>::erase(K key) {
+
     NodeType* cur_ptr = front;
+
     NodeType* pre = NULL;
 
    while( cur_ptr ) {
@@ -65,12 +72,70 @@ void HTList<K,V>::erase(K key) {
             m_size--;
             break;
         }
+
+        if( front != nullptr ) {
+            if( cur_ptr->key == key ) {
+
+                front = cur_ptr->next;
+                if( front == back )
+                    back = front;
+
+                delete cur_ptr;
+                m_size--;
+                return;
+            }
+        }
+        while( cur_ptr != nullptr ) {
+
+            if( cur_ptr->next ) {
+                if( cur_ptr->next->key == key ) {
+
+                    NodeType* tmp= cur_ptr->next;
+                    cur_ptr->next = (cur_ptr->next->next);
+
+                    if( tmp == back )
+                        back = cur_ptr;
+
+                    delete tmp;
+                    m_size--;
+                    return;
+                }
+                //cur_ptr = cur_ptr->next;
+            }
+            cur_ptr = cur_ptr->next;
+        }
+    }
+}
+/*
+template<class K, class V>
+void HTList<K,V>::erase(K key) {
+    NodeType* cur_ptr = front;
+    NodeType* pre = NULL;
+
+    while( cur_ptr ) {
+        if( cur_ptr->key == key ) {
+            if( cur_ptr==front ){
+                if(cur_ptr->next)
+                    front = cur_ptr->next;
+                else
+                    front=back=NULL;
+            }
+            else if( cur_ptr->next )
+                pre->next = cur_ptr->next;
+            else
+                back = pre;
+            delete cur_ptr;
+            m_size--;
+            break;
+        }
+>>>>>>> origin/errorbranch
         else{
             pre=cur_ptr;
             cur_ptr = cur_ptr->next;
         }
     }
 }
+*/
 
 // return pointer to node with key, null if not found
 template<class K, class V>
@@ -97,6 +162,7 @@ void HashTable<K,V>::insert(K key, V val) {
 // Deletes the first node found with certain key
 template<class K, class V>
 void HashTable<K,V>::erase(K key) {
+
     int index = hashfunc(key);
     table[index].erase(key);
 }
