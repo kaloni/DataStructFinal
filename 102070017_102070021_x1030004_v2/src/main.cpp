@@ -636,7 +636,7 @@ int hashfunc(LicenseType License) {
 int main(int argc, char* argv[]){
     
     if( argc != 4 ) {
-        cout << "arguments are incorrect" << endl;
+        cout << "arguments are incorrent" << endl;
         return 0;
     }
     

@@ -45,7 +45,7 @@
       launchStyle = "0"
       useCustomWorkingDirectory = "YES"
       customWorkingDirectory = "/Users/Carl/Documents/XCode/HW/Project/Project"
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
@@ -61,16 +61,16 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "Testcases/TC1/testCase01"
-            isEnabled = "YES">
+            argument = "Testcases/TC3_basic/testCase03"
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "Testcases/TC1/testMap.txt"
-            isEnabled = "YES">
+            argument = "Testcases/TC3_basic/testMap"
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "Testcases/TC1/output.txt"
-            isEnabled = "YES">
+            argument = "Testcases/TC3_basic/test3_output"
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>
