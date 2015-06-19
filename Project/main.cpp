@@ -293,7 +293,7 @@ int Returns(xStationType statName,  LicenseType license, int mile, HashTable<Lic
     BikePtr* bikeMetaPtr = ht.get(license);
     if( bikeMetaPtr ) {
         BikePtr bike = *bikeMetaPtr;
-        bike->Status=Free;
+        //bike->Status=Free;
 
          vector<int> prev = stationMap.dijkstra(bike->Station);
          forward_list<int> shortest_path = stationMap.getPath(prev, statName);
@@ -351,12 +351,12 @@ int Returns(xStationType statName,  LicenseType license, int mile, HashTable<Lic
 
 
         bike->Mileage=mile;
-        int index = Station[bike->Station].heaps[bike->Class].find(bike, &licenseComp);
-        Station[bike->Station].heaps[bike->Class].remove(index);
+        int index = Station[bike->Station].HRent.find(bike, &licenseComp);
+        Station[bike->Station].HRent.remove(index);
         Station[bike->Station].Nets[bike->Class] += charge;
         
-        bike->Station = statName;
-        Station[statName].add(bike);
+        bike->Status = Free;
+        Station[bike->Station].add(bike);
         
         cout<<"Rental charge for this bike is "<<charge<<"."<<endl;
     }
@@ -368,7 +368,8 @@ void Trans(xStationType StationName, string license, BikeTable& ht) {
     BikePtr* bikeMetaPtr = ht.get(License);
      if( bikeMetaPtr ) {
         BikePtr bike = *bikeMetaPtr;
-        if(bike->Status==0){
+        if(bike->Status==Free){
+            
             int index = Station[bike->Station].heaps[bike->Class].find(bike, &licenseComp);
             Station[bike->Station].heaps[bike->Class].remove(index);
             bike->Station = StationName;
@@ -425,11 +426,20 @@ void StationReport(xStationType statName) {
         cout<< string(60, '=') << endl;
         cout << setw(60) << subtotal << endl << endl;
         
+        
+        int bikes[4];
+        for(int i = 0; i < 4; ++i) {
+            bikes[i] = Station[statName].heaps[i].size();
+        }
+        for(BikeHeap::iterator it = Station[statName].HRent.begin(); it != Station[statName].HRent.end(); ++it) {
+            bikes[(*it)->Class] += 1;
+        }
+        
         cout << setw(12) << "Net" << setw(12) << "Electric" << setw(12) << "Lady" << setw(12) << "Road" << setw(12) << "Hybrid" << endl;
         cout<< string(60, '=') << endl;
         cout << setw(12) << Station[statName].Net();
         for(int i = 0; i < 4; ++i) {
-            cout << setw(12) << Station[statName].heaps[i].size();
+            cout << setw(12) << bikes[i];
         }
         cout << endl << string(60, '=') << endl << endl;
     }
@@ -444,7 +454,7 @@ void UBikeReport() {
     int bikes[4];
     for(int i = 0; i < 4; i++) bikes[i] = 0;
     
-    cout << setw(30) << "Taipei U-Bike" << endl;
+    cout << setw(30) << "Taipei U-bike" << endl;
     cout << setw(30) << "Free Bikes" << endl;
     cout << setw(12) << "License" << setw(12) << "Mileage"<<setw(12) << "Class" << setw(12) << "Station" << setw(12) << "Total" << endl;
     cout<< string(60, '=') << endl;
@@ -481,7 +491,7 @@ void UBikeReport() {
     for(int i = 0; i < 4; ++i) {
         cout << setw(12) << bikes[i];
     }
-    cout << endl << endl;
+    cout << endl << string(60, '=') << endl << endl;
 }
 void NetSearch(xStationType statName) {
 
@@ -491,7 +501,7 @@ void NetSearch(xStationType statName) {
         cout << classTypeToString(i) << " " << Station[statName].Nets[i] << endl;
     }
     cout << string(15, '=') << endl;
-    cout << "Total" << Station[statName].Net() << endl << endl;
+    cout << "Total " << Station[statName].Net() << endl << endl;
 }
 
 void JunkIt(string Licensestr, BikeTable& ht) {
@@ -505,23 +515,28 @@ void JunkIt(string Licensestr, BikeTable& ht) {
     if( bikeMetaPtr ) {
 
         BikePtr bike = *bikeMetaPtr;
-        cout << "Bike " << bike->License << " is deleted from " << stationTypeToString(bike->Station) << "." << endl;
+        if( bike->Status == Rented ) {
+            cout << "Bike " << bike->License << " is now being rented." << endl;
+        }
+        else {
+            cout << "Bike " << bike->License << " is deleted from " << stationTypeToString(bike->Station) << "." << endl;
 
 
-        int index = Station[bike->Station].heaps[bike->Class].find(bike, &licenseComp);
-
-        ht.erase(License);
-        if(index>=0){
-
-            //int index = heap.find(bike, &licenseComp);
             int index = Station[bike->Station].heaps[bike->Class].find(bike, &licenseComp);
 
             ht.erase(License);
             if(index>=0){
-                //heap.remove(index);
 
-                Station[bike->Station].heaps[bike->Class].remove(index);
-                delete bike;
+                //int index = heap.find(bike, &licenseComp);
+                int index = Station[bike->Station].heaps[bike->Class].find(bike, &licenseComp);
+
+                ht.erase(License);
+                if(index>=0){
+                    //heap.remove(index);
+
+                    Station[bike->Station].heaps[bike->Class].remove(index);
+                    delete bike;
+                }
             }
         }
     }
