@@ -102,14 +102,14 @@ Rental charge for this bike is 210.
 ============================================================
           CCCC1             40       Electric
           AC000             33       Electric
-          CCCC1             40       Electric
+          CCCC0             33       Electric
 ============================================================
                                                            3
 
                   Rented Bikes
         License        Mileage          Class       SubTotal
 ============================================================
-          CCCC0             33       Electric
+          BBBB1             33       Electric
 ============================================================
                                                            1
 
@@ -122,8 +122,8 @@ Rental charge for this bike is 210.
                     Free Bikes
         License        Mileage          Class       SubTotal
 ============================================================
-          AAAA1             37         Hybrid
           AAAA3             37         Hybrid
+          AAAA1             37         Hybrid
 ============================================================
                                                            2
 
@@ -172,9 +172,9 @@ Hash Table
        NTHU0          59        Lady       Xinpu
        CCCC1          40    Electric       Ximen
        AC000          33    Electric       Ximen
-       CCCC1          40    Electric       Ximen
-       AAAA1          37      Hybrid  Liuzhangli
+       CCCC0          33    Electric       Ximen
        AAAA3          37      Hybrid  Liuzhangli
+       AAAA1          37      Hybrid  Liuzhangli
        NTHU4          40        Lady     Jingmei
        NTHU2           0        Lady     Jingmei
        NTHU3           2        Lady     Jingmei
@@ -185,12 +185,12 @@ Hash Table
      License     Mileage       Class     Station       Total
 ============================================================
        NTHU5          20        Lady     Danshui
-       CCCC0          33    Electric       Ximen
+       BBBB1          33    Electric       Ximen
 ============================================================
                                                            2
 
          Net    Electric        Lady        Road      Hybrid
 ============================================================
-         985           3           5           1           3
+         985           4           6           1           3
 ============================================================
 

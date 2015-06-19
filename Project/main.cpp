@@ -110,7 +110,7 @@ struct BikePtrComp {
             return false;
         }
          */
-        return p1->Mileage >= p2->Mileage;
+        return p1->Mileage > p2->Mileage;
     }
 };
 
@@ -458,32 +458,35 @@ void UBikeReport() {
     cout << setw(30) << "Free Bikes" << endl;
     cout << setw(12) << "License" << setw(12) << "Mileage"<<setw(12) << "Class" << setw(12) << "Station" << setw(12) << "Total" << endl;
     cout<< string(60, '=') << endl;
-    int subtotal = 0;
+    int total = 0;
+    
     for(int i = 0; i < 12; ++i) {
         for(int j = 0; j < 4; ++j) {
             for(BikeHeap::iterator it = Station[i].heaps[j].begin(); it != Station[i].heaps[j].end(); ++it) {
                 inquireBikeHelper(*it, 8, 12, true);
-                subtotal++;
+                total++;
                 bikes[j]++;
             }
         }
         net += Station[i].Net();
     }
+    
     cout<< string(60, '=') << endl;
-    cout << setw(60) << subtotal << endl << endl;
+    cout << setw(60) << total << endl << endl;
     
     cout << setw(30) << "Rented Bikes" << endl;
     cout << setw(12) << "License" << setw(12) << "Mileage"<<setw(12) << "Class" << setw(12) << "Station" << setw(12) << "Total" << endl;
     cout<< string(60, '=') << endl;
-    subtotal = 0;
+    total = 0;
     for(int i = 0; i < 12; ++i) {
         for(BikeHeap::iterator it = Station[i].HRent.begin(); it != Station[i].HRent.end(); ++it) {
             inquireBikeHelper(*it, 8, 12, true);
-            subtotal++;
+            bikes[(*it)->Class] += 1;
+            total++;
         }
     }
     cout<< string(60, '=') << endl;
-    cout << setw(60) << subtotal << endl << endl;
+    cout << setw(60) << total << endl << endl;
     
     cout << setw(12) << "Net" << setw(12) << "Electric" << setw(12) << "Lady" << setw(12) << "Road" << setw(12) << "Hybrid" << endl;
     cout<< string(60, '=') << endl;

@@ -31,12 +31,15 @@ void HeapType<T, Comp>::bubbleDown(int index) {
         int rightChildIndex = 2*index + 2;
         int maxChildIndex = index;
         // if have 2 children
+        /*
         if( rightChildIndex < innerHeap.size() ) {
             //maxChildIndex = innerHeap[leftChildIndex] > innerHeap[rightChildIndex] ? leftChildIndex : rightChildIndex;
             maxChildIndex = comp(innerHeap[leftChildIndex], innerHeap[rightChildIndex]) ? leftChildIndex : rightChildIndex;
         }
+         */
         // else if one child
-        else if( leftChildIndex < innerHeap.size() ) {
+        //else if( leftChildIndex < innerHeap.size() ) {
+        if( leftChildIndex < innerHeap.size() ) {
             maxChildIndex = leftChildIndex;
         }
 
@@ -68,13 +71,13 @@ int HeapType<T,Comp>::find(const T& elem, bool (*findComp)(T t1, T t2)) {
 
             int left_index = 2*cur_index + 1;
             int right_index = left_index + 1;
-            if( left_index < innerHeap.size() ) {
-                if( comp(innerHeap[left_index], elem) )
-                    index_stack.push(left_index);
-            }
             if( right_index < innerHeap.size() ) {
-                if( comp(innerHeap[right_index], elem) )
+                if( comp(innerHeap[right_index], elem) || (! comp(innerHeap[right_index], elem) && ! comp(elem, innerHeap[right_index]) ))
                     index_stack.push(right_index);
+            }
+            if( left_index < innerHeap.size() ) {
+                if( comp(innerHeap[left_index], elem) || (! comp(innerHeap[left_index], elem) && ! comp(elem, innerHeap[left_index]) ) )
+                    index_stack.push(left_index);
             }
         }
     }
