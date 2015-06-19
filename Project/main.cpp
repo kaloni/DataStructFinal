@@ -154,7 +154,10 @@ struct StationType{
         } return net;
     }
     void add(BikePtr bike){
-        heaps[bike->Class].insert(bike);
+        if(bike->Status==Free)
+            heaps[bike->Class].insert(bike);
+        else
+            HRent.insert(bike);
     }
 }Station[12];
 
@@ -248,76 +251,8 @@ void NewBike(ClassType Class, string License, int Mile, xStationType StationName
 
     cout << "New bike is received by Station " << stationTypeToString(StationName) << "." << endl;
 
-    /*
-    //cout<<Class<<" "<<License<<" "<<Mile<<" "<<StationName<<endl;
-    newnode->Class=Class;
-    int i;
-    for(i=0; i<5; i++){
-        newnode->License[i]=License[i];
-    }
-
-    int LicenseTag=(int)License[0]-48;
-    //cout<<LicenseTag<<endl;
-
-    i=1;
-    while(i<5){
-        if(isdigit(License[i]))
-            LicenseTag=LicenseTag*31+(License[i]-48);
-        else
-            LicenseTag=LicenseTag*31+(License[i]-55);
-        i++;
-    }
-    LicenseTag>>=10;
-    char temp = (char) LicenseTag;
-    LicenseTag = temp;
-
-    cout<<LicenseTag<<endl;
-
-    newnode->Mileage=Mile;
-    newnode->Station=StationName;
-    newnode->Status=Free;
-     */
-
-    // Station[StationName];
-    // version 2
-    /*
-    switch(Class) {
-        case Electric:
-            Station[StationName].NumElectric++;
-            break;
-        case Lady:
-            Station[StationName].NumLady++;
-            break;
-        case Road:
-            Station[StationName].NumRoad++;
-            break;
-        case Hybrid:
-            Station[StationName].NumHybrid++;
-            break;
-    }
-     */
-
-    // version 1
-    /*
-    if(Class==0){
-        Station[StationName].NumElectric++;
-    }
-    else if(Class==1){
-        Station[StationName].NumLady++;
-    }
-    else if(Class==2){
-        Station[StationName].NumRoad++;
-    }
-    else if(Class==3){
-        Station[StationName].NumHybrid++;
-    }
-    */
-    //Station[StationName].Net++;
-
-
 }
 
-//template<class K, class V>
 void Inquire(string Licensestr, HashTable<LicenseType, BikePtr>& ht){
 
     LicenseType License(Licensestr);
@@ -334,33 +269,121 @@ void Inquire(string Licensestr, HashTable<LicenseType, BikePtr>& ht){
     else {
         cout << "Bike " << Licensestr << " does not belong to our company." << endl;
     }
+}
 
-   /* int LicenseTag=(int)License[0]-48;
-    //cout<<LicenseTag<<endl;
 
-    int i=1;
-    while(i<5){
-        if(isdigit(License[i]))
-            LicenseTag=LicenseTag*31+(License[i]-48);
-        else
-            LicenseTag=LicenseTag*31+(License[i]-55);
-        i++;
+void Rent(xStationType StationName, ClassType Class) {
+    
+    if( ! Station[StationName].heaps[Class].empty() ) {
+    //if(Station[StationName].heaps[Class].top()){
+        BikePtr bike = Station[StationName].heaps[Class].top();
+        Station[StationName].heaps[Class].pop();
+        bike->Status = Rented;
+        //Station[StationName].heaps[Class].top()->Status=Rented;
+        //Station[StationName].add(Station[StationName].heaps[Class].top());
+        Station[StationName].add(bike);
+        cout<<"A bike is rented from "<<stationTypeToString(StationName)<<"."<<endl;
     }
-    LicenseTag>>=10;
-    char temp = (char) LicenseTag;
-    LicenseTag = temp;
+    else
+        cout<<"No free bike is available."<<endl;
+}
 
-    HashTable<K,V>::NodeType* ptr;
-    while(ptr){
-        if(ptr->key==License)
-            cout << setw(15) << ptr->key<< setw(15) << ptr->mile<<setw(15) << ptr->class << setw(15) << ptr->station<<endl;
-        else
-            ptr=ptr->next;
+int Returns(xStationType statName,  LicenseType license, int mile, HashTable<LicenseType, BikePtr>&ht, Graph &stationMap) {
+    
+    BikePtr* bikeMetaPtr = ht.get(license);
+    if( bikeMetaPtr ) {
+        BikePtr bike = *bikeMetaPtr;
+        bike->Status=Free;
+
+         vector<int> prev = stationMap.dijkstra(bike->Station);
+         forward_list<int> shortest_path = stationMap.getPath(prev, statName);
+         int dist=0;
+         if( ! shortest_path.empty() ) {
+
+             for(forward_list<int>::iterator it = shortest_path.begin(); it != shortest_path.end();) {
+                 int from_tmp = *it;
+
+                 forward_list<int>::iterator it_next = it;
+                 it_next++;
+                 if( it_next != shortest_path.end() ) {
+                    int to_tmp = *(it_next);
+                    dist += stationMap.distance(from_tmp, to_tmp);
+                 }
+                 it = it_next;
+            }
+         }
+
+        int charge=0;
+        int tmp=mile-bike->Mileage;
+
+        if(tmp>dist){
+            switch(bike->Class){
+                case 0:
+                    charge=tmp*40;
+                    break;
+                case 1:
+                    charge=tmp*30;
+                    break;
+                case 2:
+                    charge=tmp*20;
+                    break;
+                case 3:
+                    charge=tmp*25;
+                    break;
+            }
+        }
+        else{
+            switch(bike->Class){
+                case 0:
+                    charge=tmp*30;
+                    break;
+                case 1:
+                    charge=tmp*25;
+                    break;
+                case 2:
+                    charge=tmp*15;
+                    break;
+                case 3:
+                    charge=tmp*20;
+                    break;
+            }
+        }
+
+
+        bike->Mileage=mile;
+        int index = Station[bike->Station].heaps[bike->Class].find(bike, &licenseComp);
+        Station[bike->Station].heaps[bike->Class].remove(index);
+        Station[bike->Station].Nets[bike->Class] += charge;
+        
+        bike->Station = statName;
+        Station[statName].add(bike);
+        
+        cout<<"Rental charge for this bike is "<<charge<<"."<<endl;
     }
-    if(ptr==NULL)
-        cout << "Bike "<<License<<" does not belong to our company."<<endl;*/
+    return 0;
+}
 
-    //int LicenseTag=hashfunc(License_Type);
+void Trans(xStationType StationName, string license, BikeTable& ht) {
+    LicenseType License(license);
+    BikePtr* bikeMetaPtr = ht.get(License);
+     if( bikeMetaPtr ) {
+        BikePtr bike = *bikeMetaPtr;
+        if(bike->Status==0){
+            int index = Station[bike->Station].heaps[bike->Class].find(bike, &licenseComp);
+            Station[bike->Station].heaps[bike->Class].remove(index);
+            bike->Station = StationName;
+            Station[StationName].add(bike);
+            cout<<"Bike "<<license<<" is transferred to "<<stationTypeToString(StationName)<<"."<<endl;
+        }
+        else
+            cout<<"Bike "<<license<<" is now being rented."<<endl;
+
+
+    }
+    else {
+        cout << "Bike " << license << " does not belong to our company." << endl;
+    }
+
 
 }
 
@@ -401,6 +424,14 @@ void StationReport(xStationType statName) {
         }
         cout<< string(60, '=') << endl;
         cout << setw(60) << subtotal << endl << endl;
+        
+        cout << setw(12) << "Net" << setw(12) << "Electric" << setw(12) << "Lady" << setw(12) << "Road" << setw(12) << "Hybrid" << endl;
+        cout<< string(60, '=') << endl;
+        cout << setw(12) << Station[statName].Net();
+        for(int i = 0; i < 4; ++i) {
+            cout << setw(12) << Station[statName].heaps[i].size();
+        }
+        cout << endl << string(60, '=') << endl << endl;
     }
     else {
         cerr << "INVALID STATION NAME : " << stationTypeToString(statName) << " : " << statName << endl;
@@ -452,27 +483,6 @@ void UBikeReport() {
     }
     cout << endl << endl;
 }
-
-void JunkBikePtr(BikePtr bike){
-    
-}
-
-void JunkIt(string license) {
-    
-}
-
-void RentBikePtr(xStationType statName, BikePtr bike) {
-    
-}
-
-int Returns(xStationType statName,  LicenseType license, int mile) {
-    return 0;
-}
-
-void Trans(xStationType statName, LicenseType license) {
-    
-}
-
 void NetSearch(xStationType statName) {
 
     cout << stationTypeToString(statName) << endl;
@@ -482,37 +492,37 @@ void NetSearch(xStationType statName) {
     }
     cout << string(15, '=') << endl;
     cout << "Total" << Station[statName].Net() << endl << endl;
-/*template<class K, class V>
-void find_bike(string License,HashTable<K, V>& ht){
-    BikePtr bike = ht.get(License);
-    int mileage = bike->Mileage;
-}*/
 }
 
-//template<class T, class Comp, class K, class V>
-//void JunkIt(string Licensestr, BikeHeap& heap, BikeTable& ht){
 void JunkIt(string Licensestr, BikeTable& ht) {
-    
+
     LicenseType License;
-    //License.license;
     int i;
     for(i=0;i<5; i++){
         License.license[i]=Licensestr[i];
     }
     BikePtr* bikeMetaPtr = ht.get(License);
     if( bikeMetaPtr ) {
-        
+
         BikePtr bike = *bikeMetaPtr;
         cout << "Bike " << bike->License << " is deleted from " << stationTypeToString(bike->Station) << "." << endl;
-        
-        //int index = heap.find(bike, &licenseComp);
+
+
         int index = Station[bike->Station].heaps[bike->Class].find(bike, &licenseComp);
-       
+
         ht.erase(License);
         if(index>=0){
-            //heap.remove(index);
-            Station[bike->Station].heaps[bike->Class].remove(index);
-            delete bike;
+
+            //int index = heap.find(bike, &licenseComp);
+            int index = Station[bike->Station].heaps[bike->Class].find(bike, &licenseComp);
+
+            ht.erase(License);
+            if(index>=0){
+                //heap.remove(index);
+
+                Station[bike->Station].heaps[bike->Class].remove(index);
+                delete bike;
+            }
         }
     }
     else {
@@ -520,8 +530,11 @@ void JunkIt(string Licensestr, BikeTable& ht) {
     }
 }
 
+
+
 template<class K, class V>
 void printHashTable(HashTable<K, V>& ht) {
+    
     for(int i = 0; i < ht.size(); ++i) {
         if( ht[i].size() > 0 ) {
             cout << i << " ";
@@ -536,10 +549,6 @@ void printHashTable(HashTable<K, V>& ht) {
             cout << endl;
         }
     }
-}
-
-void HashReport(){
-    
 }
 
 // print a heap in console
@@ -572,14 +581,14 @@ unsigned createMask(unsigned start, unsigned end) {
 
 // The hashfunction used by our program
 int hashfunc(LicenseType License) {
-    
+
     char input[5];
     int binary[50]={0};
     int i,j,k;
     int key=0;
     for ( i=0 ; i<5 ; i++ )
         input[i] = License[i];
-    
+
     for(i=0;i<5;i++){
         if(isdigit(input[i]))
             key = key*31+(input[i]-48);
@@ -644,7 +653,7 @@ int main(int argc, char* argv[]){
     cin.rdbuf( in_stream.rdbuf() );
     
     ofstream out_stream;
-    out_stream.open("Testcases/TC1_basic/test3_output.txt");
+    out_stream.open("Testcases/TC3_basic/test3_output.txt");
     streambuf *coutbuf = cout.rdbuf();
     cout.rdbuf( out_stream.rdbuf() );
 
@@ -670,6 +679,24 @@ int main(int argc, char* argv[]){
             cin >> License;
             JunkIt(License, bikeTable);
         }
+        else if(move=="Rent"){
+            cin>>StationString>>Class;
+            Type = strToClass(Class);
+            StationName = strToStationType(StationString);
+            Rent(StationName, Type);
+        }
+        else if(move=="Returns"){
+            cin>>StationString>>License>>Mile;
+            StationName = strToStationType(StationString);
+            LicenseType license(License);
+            Returns(StationName,  license, Mile, bikeTable,stationMap);
+            
+        }
+        else if(move=="Trans"){
+            cin>>StationString>>License;
+            StationName = strToStationType(StationString);
+            Trans(StationName, License, bikeTable);
+        }
         else if(move=="HashReport"){
             cout << "Hash Table" << endl;
             printHashTable(bikeTable);
@@ -686,46 +713,6 @@ int main(int argc, char* argv[]){
             UBikeReport();
         }
     }
-    /*
-    while(getline(cin, state)){
-
-        istringstream iss(state);
-        iss>>move;
-
-        if(move=="NewBike"){
-            iss >> Class>>License>>Mile>>StationString;
-            Type = strToClass(Class);
-            StationName = strToStationType(StationString);
-            NewBike(Type, License, Mile, StationName, bikeTable);
-        }
-        else if(move=="Inquire"){
-            iss >> License;
-            Inquire(License, bikeTable);
-        }
-        else if(move=="JunkIt"){
-            iss >> License;
-            //JunkIt(License, bikeHeap, bikeTable);
-            JunkIt(License, bikeTable);
-        }
-        else if(move=="HashReport"){
-            //HashReport();
-            cout << "Hash Table" << endl;
-            printHashTable(bikeTable);
-        }
-        else if( move == "NetSearch" ) {
-            iss >> StationString;
-            NetSearch(strToStationType(StationString));
-        }
-        else if( move == "StationReport" ) {
-            iss >> StationString;
-            StationReport(strToStationType(StationString));
-        }
-        else if( move == "UBikeReport" ) {
-            UBikeReport();
-        }
-    }
-    */
-    
     
     // Remember to close the ifstream and restore cin buffer
     cin.rdbuf( cinbuf );
@@ -746,157 +733,7 @@ int main(int argc, char* argv[]){
             it_2 = tmp;
         }
     }
-    
-    ////////////////// Testing ////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////
-    // Graph Test (station map)
-    // open the station map file
-    /*
-     ifstream in_stream;
-     in_stream.open("Testcases/TC1/testMap");
-     streambuf *cinbuf = cin.rdbuf();
-     cin.rdbuf( in_stream.rdbuf() );
 
-     // declase the station map as a graph
-     Graph stationMap(12);
-     // parse the station map file into graph
-     string str;
-     while( cin >> str) {
-     xStationType from = getStationType(str);
-     cin >> str;
-     xStationType to = getStationType(str);
-     cin >> str;
-     int distance;
-     try {
-     stringstream ss(str);
-     ss >> distance;
-     //distance = stoi(str);
-     }
-     catch(...) {
-     cerr << "Parse error : Could not parse distance between " << stationTypeToString(from) << " and " << stationTypeToString(to) << endl;
-     exit(-1);
-     }
-     if( from != NoStation && to != NoStation )
-     stationMap.insert(from, to, distance);
-     else
-     cerr << "Parse error : Could not parse station names : " << stationTypeToString(from) << " | " << stationTypeToString(to) << endl;
-     }
-
-     // restore iostream, close filestream
-     cin.rdbuf( cinbuf );
-     in_stream.close();
-
-     // print the station map (printed as integers, because that's how it's stored)
-     // 0 is Danshui, 1 is Hongshulin etc.
-     cout << "   StationMap Graph    " << endl;
-     cout << stationMap << endl;
-
-
-     cout << "   Shortest paths from Danshui to all other stations   " << endl;
-     // get the "previous station vector" from the dijkstra shortest path algorithm
-     // this gives all shortests paths from, in this case, Danshui station
-     vector<int> prev = stationMap.dijkstra(Danshui);
-     // Calculate path to each station, and print the paths :)
-     for(int i = 0; i < stationMap.size(); i++) {
-     forward_list<int> shortest_path = stationMap.getPath(prev, i);
-     if( ! shortest_path.empty() ) {
-
-     for(forward_list<int>::iterator it = shortest_path.begin();;) {
-     cout << stationTypeToString(*it);
-     if( ++it != shortest_path.end() )
-     cout << "->";
-     else break;
-     }
-     cout << endl;
-     }
-     }
-     */
-    // End of Graph Test
-    ////////////////////////////////////////////////////////////////////////////////////////
-
-    ////////////////////////////////////////////////////////////////////////////////////////
-    // HeapType Test
-    /*
-     struct BikeMin {
-     bool operator()(const BikeType& b1, const BikeType& b2) {
-     return b1.Mileage < b2.Mileage;
-     }
-     };
-
-     BikePtr a,b,c;
-     a = new BikeType;
-     b = new BikeType;
-     c = new BikeType;
-     a->License[0] = 'a';
-     b->License[0] = 'b';
-     c->License[0] = 'c';
-     a->Mileage = 1;
-     b->Mileage = 1;
-     c->Mileage = 1;
-     BikeHeap bikeHeap;
-     bikeHeap.insert(a);
-     bikeHeap.insert(b);
-     bikeHeap.insert(c);
-
-     printHeap(bikeHeap);
-
-     int index = bikeHeap.find(b, &licenseComp);
-     cout << "index = " << index << endl;
-     cout << "mileage = " << b->Mileage << endl;
-
-     delete a;
-     delete b;
-     delete c;
-     a = b = c = nullptr;
-    */
-    // End of HeapType Test
-    ////////////////////////////////////////////////////////////////////////////////////////
-
-
-    ////////////////////////////////////////////////////////////////////////////////////////
-    // HashTable Test
-    /*
-     BikeTable bikeTable(256, &hashfunc);
-     BikeType b1, b2, b3;
-     for(int i = 0; i < 5; i++) {
-     b1.License[i] = 'a';
-     b2.License[i] = 'a';
-     b3.License[i] = 'b';
-     }
-     bikeTable.insert(b1.License, &b1);
-     bikeTable.insert(b2.License, &b2);
-     bikeTable.insert(b3.License, &b3);
-     printHashTable(bikeTable);
-     */
-    // End of HashTable Test
-    ////////////////////////////////////////////////////////////////////////////////////////
-    //*/
-
-    /*
-     BikeTable::NodeType* x = bikeTable.get(b1.License);
-     if( x ) {
-     for(int i = 0; i < 5; i++) {
-     cout << x->key[i];
-     if( i < 4 ) cout << ", ";
-     }
-     cout << endl;
-     }
-
-     int hash = hashfunc(b1.License);
-     BikeTable::ListType list = bikeTable[hash];
-     bool b = (it_1 != it_2);
-     for(BikeTable::ListType::iterator it = list.begin(); it.nonend(); ++it) {
-     for(int i = 0; i < 5; ++i) {
-     //cout << (*it).key[i] << ", ";
-     cout << it->key[i];
-     if( i < 4 ) cout << ", ";
-     }
-     cout << " :: ";
-     }
-     cout << endl;
-     */
-    
     return 0;
 }
-
 

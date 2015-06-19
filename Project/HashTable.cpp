@@ -6,6 +6,14 @@
 //  Copyright (c) 2015 Carl Dehlin. All rights reserved.
 //
 
+//
+//  HashTable.cpp
+//  Project
+//
+//  Created by Carl Dehlin on 09/06/15.
+//  Copyright (c) 2015 Carl Dehlin. All rights reserved.
+//
+
 #include "HashTable.h"
 #include <iostream>
 
@@ -31,7 +39,11 @@ void HTList<K,V>::push_back(NodeType* node) {
     else {
         front = back = node;
     }
+
+    back->next=NULL;
+
     back->next = nullptr;
+
     m_size++;
 }
 
@@ -39,47 +51,67 @@ void HTList<K,V>::push_back(NodeType* node) {
 
 template<class K, class V>
 void HTList<K,V>::erase(K key) {
-    
+
     NodeType* cur_ptr = front;
-    if( front != nullptr ) {
+
+    NodeType* pre = NULL;
+
+   while( cur_ptr ) {
         if( cur_ptr->key == key ) {
-            
-            front = cur_ptr->next;
-            if( front == back )
-                back = front;
-            
+            if( cur_ptr==front ){
+                if(cur_ptr->next)
+                    front = cur_ptr->next;
+                else
+                    front=back=NULL;
+            }
+            else if( cur_ptr->next )
+                pre->next = cur_ptr->next;
+            else
+                back = pre;
             delete cur_ptr;
             m_size--;
-            return;
+            break;
         }
-    }
-    while( cur_ptr != nullptr ) {
-        
-        if( cur_ptr->next ) {
-            if( cur_ptr->next->key == key ) {
-                
-                NodeType* tmp= cur_ptr->next;
-                cur_ptr->next = (cur_ptr->next->next);
 
-                if( tmp == back )
-                    back = cur_ptr;
+        if( front != nullptr ) {
+            if( cur_ptr->key == key ) {
 
-                delete tmp;
+                front = cur_ptr->next;
+                if( front == back )
+                    back = front;
+
+                delete cur_ptr;
                 m_size--;
                 return;
             }
-            //cur_ptr = cur_ptr->next;
         }
-        cur_ptr = cur_ptr->next;
+        while( cur_ptr != nullptr ) {
+
+            if( cur_ptr->next ) {
+                if( cur_ptr->next->key == key ) {
+
+                    NodeType* tmp= cur_ptr->next;
+                    cur_ptr->next = (cur_ptr->next->next);
+
+                    if( tmp == back )
+                        back = cur_ptr;
+
+                    delete tmp;
+                    m_size--;
+                    return;
+                }
+                //cur_ptr = cur_ptr->next;
+            }
+            cur_ptr = cur_ptr->next;
+        }
     }
 }
-
 /*
 template<class K, class V>
 void HTList<K,V>::erase(K key) {
     NodeType* cur_ptr = front;
     NodeType* pre = NULL;
-    
+
     while( cur_ptr ) {
         if( cur_ptr->key == key ) {
             if( cur_ptr==front ){
@@ -96,6 +128,7 @@ void HTList<K,V>::erase(K key) {
             m_size--;
             break;
         }
+>>>>>>> origin/errorbranch
         else{
             pre=cur_ptr;
             cur_ptr = cur_ptr->next;

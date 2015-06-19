@@ -24,40 +24,57 @@ Bike 00006 does not belong to our company.
 Bike 00007 does not belong to our company.
 Bike NTHU1 is deleted from Jingmei.
 Bike AAAA2 is deleted from Liuzhangli.
+A bike is rented from Jingmei.
+A bike is rented from Jingmei.
+A bike is rented from Danshui.
+Rental charge for this bike is 750.
+Rental charge for this bike is 25.
+Bike CCCC0 is transferred to Ximen.
+Bike BBBB1 is transferred to Ximen.
+A bike is rented from Ximen.
+A bike is rented from Ximen.
+Rental charge for this bike is 210.
                        Danshui
                     Free Bikes
         License        Mileage          Class       SubTotal
 ============================================================
-          CCCC0             33       Electric
-          BBBB1             33       Electric
-          NTHU5             20           Lady
           NTHU6              3           Lady
           BBBB0              5           Road
           AAAA0             13         Hybrid
-============================================================
-                                                           6
-
-                  Rented Bikes
-        License        Mileage          Class       SubTotal
-============================================================
-============================================================
-                                                           0
-
-                       Jingmei
-                    Free Bikes
-        License        Mileage          Class       SubTotal
-============================================================
-          NTHU4             15           Lady
-          NTHU2              0           Lady
-          NTHU3              1           Lady
 ============================================================
                                                            3
 
                   Rented Bikes
         License        Mileage          Class       SubTotal
 ============================================================
+          NTHU5             20           Lady
+============================================================
+                                                           1
+
+         Net    Electric        Lady        Road      Hybrid
+============================================================
+           0           0           1           1           1
+============================================================
+
+                       Jingmei
+                    Free Bikes
+        License        Mileage          Class       SubTotal
+============================================================
 ============================================================
                                                            0
+
+                  Rented Bikes
+        License        Mileage          Class       SubTotal
+============================================================
+          NTHU4             40           Lady
+          NTHU3              2           Lady
+============================================================
+                                                           2
+
+         Net    Electric        Lady        Road      Hybrid
+============================================================
+         775           0           0           0           0
+============================================================
 
                          Xinpu
                     Free Bikes
@@ -73,20 +90,32 @@ Bike AAAA2 is deleted from Liuzhangli.
 ============================================================
                                                            0
 
+         Net    Electric        Lady        Road      Hybrid
+============================================================
+           0           0           1           0           0
+============================================================
+
                          Ximen
                     Free Bikes
         License        Mileage          Class       SubTotal
 ============================================================
           AC000             33       Electric
-          CCCC1             33       Electric
+          NTHU3              2           Lady
 ============================================================
                                                            2
 
                   Rented Bikes
         License        Mileage          Class       SubTotal
 ============================================================
+          CCCC0             33       Electric
+          BBBB1             33       Electric
 ============================================================
-                                                           0
+                                                           2
+
+         Net    Electric        Lady        Road      Hybrid
+============================================================
+         210           1           1           0           0
+============================================================
 
                     Liuzhangli
                     Free Bikes
@@ -103,23 +132,28 @@ Bike AAAA2 is deleted from Liuzhangli.
 ============================================================
                                                            0
 
+         Net    Electric        Lady        Road      Hybrid
+============================================================
+           0           0           0           0           2
+============================================================
+
 Jingmei
 ===============
 Electric 0
-Lady 0
+Lady 775
 Road 0
 Hybrid 0
 ===============
-Total0
+Total775
 
 Ximen
 ===============
-Electric 0
+Electric 210
 Lady 0
 Road 0
 Hybrid 0
 ===============
-Total0
+Total210
 
 Hash Table
 11 BBBB0->BBBB1
@@ -131,30 +165,30 @@ Hash Table
                     Free Bikes
      License     Mileage       Class     Station       Total
 ============================================================
-       CCCC0          33    Electric     Danshui
-       BBBB1          33    Electric     Danshui
-       NTHU5          20        Lady     Danshui
        NTHU6           3        Lady     Danshui
        BBBB0           5        Road     Danshui
        AAAA0          13      Hybrid     Danshui
        NTHU0          59        Lady       Xinpu
        AC000          33    Electric       Ximen
-       CCCC1          33    Electric       Ximen
+       NTHU3           2        Lady       Ximen
        AAAA1          37      Hybrid  Liuzhangli
        AAAA3          37      Hybrid  Liuzhangli
-       NTHU4          15        Lady     Jingmei
-       NTHU2           0        Lady     Jingmei
-       NTHU3           1        Lady     Jingmei
+       CCCC1          40    Electric       Muzha
 ============================================================
-                                                          14
+                                                           9
 
                   Rented Bikes
      License     Mileage       Class     Station       Total
 ============================================================
+       NTHU5          20        Lady     Danshui
+       CCCC0          33    Electric       Ximen
+       BBBB1          33    Electric       Ximen
+       NTHU4          40        Lady     Jingmei
+       NTHU3           2        Lady       Ximen
 ============================================================
-                                                           0
+                                                           5
 
          Net    Electric        Lady        Road      Hybrid
 ============================================================
-           0           4           6           1           3
+         985           2           3           1           3
 

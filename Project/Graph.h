@@ -21,12 +21,13 @@ public:
     Graph(int size) : adj_list(size) {}
     vector<int> dijkstra(int from);
     forward_list<int> getPath(const vector<int>& prev, int to);
+    int distance(int from, int to);
     void insert(int from, int to, int weight);
     int size() const { return static_cast<int>(adj_list.size()); }
-    
+
     // operators
     friend ostream& operator<<(ostream&, const Graph&);
-    
+
     // iterator
     typedef vector<map<int,int> > AdjList;
     AdjList::iterator begin() { return adj_list.begin(); }
