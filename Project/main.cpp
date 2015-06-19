@@ -736,7 +736,17 @@ int main(int argc, char* argv[]){
     cin.rdbuf( cinbuf );
     in_stream.close();
     
-
+    
+    // Delete all bikePtr from UBike (HashTable)
+    // Warning : All BikePtr becomes unvalid
+    for(BikeTable::iterator it = bikeTable.begin(); it != bikeTable.end(); ++it) {
+        for(BikeTable::ListType::iterator it_2 = it->begin(); it_2.nonend();) {
+            BikeTable::ListType::iterator tmp = it_2.next();
+            delete it_2->val;
+            it_2 = tmp;
+        }
+    }
+    
     ////////////////// Testing ////////////////
     ////////////////////////////////////////////////////////////////////////////////////////
     // Graph Test (station map)
