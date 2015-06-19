@@ -6,6 +6,14 @@
 //  Copyright (c) 2015 Carl Dehlin. All rights reserved.
 //
 
+//
+//  HashTable.cpp
+//  Project
+//
+//  Created by Carl Dehlin on 09/06/15.
+//  Copyright (c) 2015 Carl Dehlin. All rights reserved.
+//
+
 #include "HashTable.h"
 #include <iostream>
 
@@ -31,7 +39,7 @@ void HTList<K,V>::push_back(NodeType* node) {
     else {
         front = back = node;
     }
-    back->next = NULL;
+    back->next=NULL;
     m_size++;
 }
 
@@ -39,26 +47,26 @@ void HTList<K,V>::push_back(NodeType* node) {
 template<class K, class V>
 void HTList<K,V>::erase(K key) {
     NodeType* cur_ptr = front;
-    if( front ) {
+    NodeType* pre = NULL;
+
+   while( cur_ptr ) {
         if( cur_ptr->key == key ) {
-            front = cur_ptr->next;
+            if( cur_ptr==front ){
+                if(cur_ptr->next)
+                    front = cur_ptr->next;
+                else
+                    front=back=NULL;
+            }
+            else if( cur_ptr->next )
+                pre->next = cur_ptr->next;
+            else
+                back = pre;
             delete cur_ptr;
             m_size--;
+            break;
         }
-    }
-    else while( cur_ptr ) {
-        if( cur_ptr->next ) {
-            if( cur_ptr->next->key == key ) {
-
-                cur_ptr->next = (cur_ptr->next->next);
-
-                if( back == cur_ptr->next )
-                    back = cur_ptr;
-
-                delete cur_ptr->next;
-                m_size--;
-                break;
-            }
+        else{
+            pre=cur_ptr;
             cur_ptr = cur_ptr->next;
         }
     }

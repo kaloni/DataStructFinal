@@ -69,6 +69,14 @@ vector<int> Graph::dijkstra(int from) {
     return prev;
 }
 
+int Graph::distance(int from, int to){
+    for(map<int, int>::iterator it = adj_list[from].begin(); it != adj_list[from].end(); ++it) {
+        if( it->first == to )
+            return it->second;
+    }
+    return -1;
+}
+
 forward_list<int> Graph::getPath(const vector<int>& prev, int to) {
     forward_list<int> path;
     int current = to;
@@ -91,3 +99,4 @@ ostream& operator<<(ostream& os, const Graph& g) {
     }
     return os;
 }
+
