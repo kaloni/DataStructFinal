@@ -24,9 +24,137 @@ Bike 00006 does not belong to our company.
 Bike 00007 does not belong to our company.
 Bike NTHU1 is deleted from Jingmei.
 Bike AAAA2 is deleted from Liuzhangli.
+                       Danshui
+                    Free Bikes
+        License        Mileage          Class       SubTotal
+============================================================
+          CCCC0             33       Electric
+          BBBB1             33       Electric
+          NTHU5             20           Lady
+          NTHU6              3           Lady
+          BBBB0              5           Road
+          AAAA0             13         Hybrid
+============================================================
+                                                           6
+
+                  Rented Bikes
+        License        Mileage          Class       SubTotal
+============================================================
+============================================================
+                                                           0
+
+                       Jingmei
+                    Free Bikes
+        License        Mileage          Class       SubTotal
+============================================================
+          NTHU4             15           Lady
+          NTHU2              0           Lady
+          NTHU3              1           Lady
+============================================================
+                                                           3
+
+                  Rented Bikes
+        License        Mileage          Class       SubTotal
+============================================================
+============================================================
+                                                           0
+
+                         Xinpu
+                    Free Bikes
+        License        Mileage          Class       SubTotal
+============================================================
+          NTHU0             59           Lady
+============================================================
+                                                           1
+
+                  Rented Bikes
+        License        Mileage          Class       SubTotal
+============================================================
+============================================================
+                                                           0
+
+                         Ximen
+                    Free Bikes
+        License        Mileage          Class       SubTotal
+============================================================
+          AC000             33       Electric
+          CCCC1             33       Electric
+============================================================
+                                                           2
+
+                  Rented Bikes
+        License        Mileage          Class       SubTotal
+============================================================
+============================================================
+                                                           0
+
+                    Liuzhangli
+                    Free Bikes
+        License        Mileage          Class       SubTotal
+============================================================
+          AAAA1             37         Hybrid
+          AAAA3             37         Hybrid
+============================================================
+                                                           2
+
+                  Rented Bikes
+        License        Mileage          Class       SubTotal
+============================================================
+============================================================
+                                                           0
+
+Jingmei
+===============
+Electric 0
+Lady 0
+Road 0
+Hybrid 0
+===============
+Total0
+
+Ximen
+===============
+Electric 0
+Lady 0
+Road 0
+Hybrid 0
+===============
+Total0
+
 Hash Table
 11 BBBB0->BBBB1
 99 NTHU0->NTHU2->NTHU3->NTHU4->NTHU5->NTHU6
 103 AAAA0->AAAA1->AAAA3
 151 AC000
 175 CCCC0->CCCC1
+                 Taipei U-Bike
+                    Free Bikes
+     License     Mileage       Class     Station       Total
+============================================================
+       CCCC0          33    Electric     Danshui
+       BBBB1          33    Electric     Danshui
+       NTHU5          20        Lady     Danshui
+       NTHU6           3        Lady     Danshui
+       BBBB0           5        Road     Danshui
+       AAAA0          13      Hybrid     Danshui
+       NTHU0          59        Lady       Xinpu
+       AC000          33    Electric       Ximen
+       CCCC1          33    Electric       Ximen
+       AAAA1          37      Hybrid  Liuzhangli
+       AAAA3          37      Hybrid  Liuzhangli
+       NTHU4          15        Lady     Jingmei
+       NTHU2           0        Lady     Jingmei
+       NTHU3           1        Lady     Jingmei
+============================================================
+                                                          14
+
+                  Rented Bikes
+     License     Mileage       Class     Station       Total
+============================================================
+============================================================
+                                                           0
+
+         Net    Electric        Lady        Road      Hybrid
+============================================================
+           0           4           6           1           3
+
